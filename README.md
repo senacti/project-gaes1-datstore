@@ -1,9 +1,9 @@
 # Proyecto Gaes 1 - DatStore
 
 -Aranguren Gonzales Oscar Julián
-br
+<br>
 -Miranda García Carlos Julián
-br
+<br>
 -Quiñones Cuenca Didier Esteban
-br
+<br>
 -Vergara Mendoza Daniel Alexander
