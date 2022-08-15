@@ -1,0 +1,6 @@
+admin@gmail.com
+abc123
+Empleado@gmail.com
+abc123
+Cliente@gmail.com
+abc123
