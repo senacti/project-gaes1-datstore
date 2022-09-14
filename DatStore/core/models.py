@@ -52,7 +52,7 @@ class Rol (models.Model):
 
 class Permission(models.Model):
     name = models.CharField(max_length=20, verbose_name="Nombre del permiso")
-    idprodFK = models.ManyToManyField(Rol)
+    idprodFK = models.ManyToManyField(Rol, verbose_name="Nombre del Rol")
 
     def __str__(self) -> str:
         return self.name
@@ -62,7 +62,6 @@ class Permission(models.Model):
         verbose_name_plural = 'Categorias'
         db_table = 'Permiso'
         ordering = ['id']
-
 
 class WayToPay(models.Model):
     name = models.CharField(max_length=15, verbose_name="Nombre de la forma de pago")
@@ -87,7 +86,7 @@ class User(models.Model):
     password = models.CharField(max_length=20, verbose_name="Contraseña del Usuario")
     telephone = models.BigIntegerField(verbose_name="Numero del Celular")
     condition = models.CharField(max_length=15, verbose_name="Estado del Usuario")
-    idrolfk = models.ForeignKey(Rol, on_delete=models.CASCADE)
+    idrolfk = models.ForeignKey(Rol, on_delete=models.CASCADE, verbose_name="Identificación del Rol")
 
     def __str__(self) -> str:
         return self.name
@@ -102,8 +101,8 @@ class InventoryEntry(models.Model):
     date = models.DateField(verbose_name="Fecha entrada")
     totalpurchase = models.IntegerField(verbose_name="Total Compra")
     refpayment = models.CharField(max_length=10, verbose_name="Referencia de pago")
-    iduser = models.ForeignKey(User, on_delete=models.CASCADE)
-    idwaytopay = models.ForeignKey(WayToPay, on_delete=models.CASCADE)   
+    iduser = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Identificación del Usuario")
+    idwaytopay = models.ForeignKey(WayToPay, on_delete=models.CASCADE, verbose_name="Identificación Forma Pago")   
     
     def __str__(self) -> str:
         return self.iduser
@@ -119,8 +118,8 @@ class Product(models.Model):
     name = models.CharField(max_length=20, verbose_name="Nombre del producto")
     stock = models.IntegerField(verbose_name="Descripcion del producto")
     state = models.CharField(max_length=20, verbose_name="Estado del producto")
-    idfksup = models.ForeignKey(Supplier, on_delete=models.CASCADE)
-    idfktipp = models.ForeignKey(TypeProduct, on_delete=models.CASCADE)
+    idfksup = models.ForeignKey(Supplier, on_delete=models.CASCADE, verbose_name="Idenfiticación del Proveedor")
+    idfktipp = models.ForeignKey(TypeProduct, on_delete=models.CASCADE, verbose_name="Identificación del Tipo Producto")
 
     def __str__(self) -> str:
         return self.name
@@ -136,8 +135,8 @@ class EntryDetail(models.Model):
     dateexpiry = models.DateField(verbose_name="Fecha caducidad de los productos")
     purchaseprice = models.BigIntegerField(verbose_name="Precio de compra de los productos")
     groupcost = models.BigIntegerField(verbose_name="Coste del grupo de productos")
-    idprodFK = models.ForeignKey(Product, on_delete=models.CASCADE)
-    identinvFK = models.ForeignKey(InventoryEntry, on_delete=models.CASCADE)
+    idprodFK = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Identificación del producto")
+    identinvFK = models.ForeignKey(InventoryEntry, on_delete=models.CASCADE, verbose_name="Identificación Entrada Inventario")
    
     def __str__(self) -> str:
         return self.idprodFK
@@ -158,15 +157,15 @@ class Order(models.Model):
     statord= models.CharField(max_length=4,choices=chstate, verbose_name="Estado Entrega")
     #models.CharField(max_length=20,verbose_name="Estado")
     refpay= models.CharField(max_length=20,null=True,verbose_name="Referencia de pago")
-    idfkpayform= models.ForeignKey(WayToPay, on_delete=models.CASCADE)
-    idfkclient= models.ForeignKey(User, on_delete=models.CASCADE)
+    idfkpayform= models.ForeignKey(WayToPay, on_delete=models.CASCADE, verbose_name="Identificación Forma Pago")
+    idfkclient= models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Identificación Cliente")
 
 class DetOrder(models.Model):
     quant=models.IntegerField(verbose_name="Cantidad productos")
     costp=models.BigIntegerField(verbose_name="Precio producto indiv.")
     costgp=models.BigIntegerField(verbose_name="Precio grupo producto")
-    idfkprod=models.ForeignKey(Product, on_delete=models.CASCADE)
-    idfkord=models.ForeignKey(Order, on_delete=models.CASCADE)
+    idfkprod=models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Ifentificación Producto")
+    idfkord=models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Identificación Pedidos")
 
     def __str__(self) -> str:
         return self.idfkord
@@ -177,13 +176,11 @@ class DetOrder(models.Model):
         db_table = 'Detallepedido'
         ordering = ['id']
 
-
-
-class inventoryoutput (models.Model):
+class Inventoryoutput (models.Model):
     amount = models.IntegerField(verbose_name="Cantidad de la Salida")
     dateout = models.DateField(verbose_name="Fecha de la Salida")
-    idprofk = models.ForeignKey(Product, on_delete=models.CASCADE)
-    iddepefk = models.ForeignKey(Order,on_delete=models.CASCADE)
+    idprofk = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Identificación Producto")
+    iddepefk = models.ForeignKey(Order,on_delete=models.CASCADE, verbose_name="Identificación Detalle Pedido")
     
     def __str__(self) -> str:
         return self.name
@@ -194,12 +191,11 @@ class inventoryoutput (models.Model):
         db_table = 'SalidaInventario'
         ordering = ['id']
 
-
-class delivery(models.Model):
+class Delivery(models.Model):
     direction = models.CharField(max_length=60, verbose_name="Direccion a dónde irá el domicilio")
     price = models.BigIntegerField(verbose_name="Precio del domicilio")
-    idPedidoFK = models.ForeignKey(Order, on_delete=models.CASCADE)
-    idEmpleadoFK = models.ForeignKey(User, on_delete=models.CASCADE)
+    idPedidoFK = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Identificación Pedido")
+    idEmpleadoFK = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Identificación Empleado")
 
     def __str__(self) -> str:
         return self.direction
