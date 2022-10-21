@@ -2,21 +2,33 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('', views.index, name='index'),
-    path('Compras/', views.compras, name='Compras'),
-    path('DetallePed/', views.detallePed, name='DetallePedidoInventario'),
-    path('Domicilio/', views.domicilio, name='Domicilio'),
-    path('Estado/', views.estado, name='Estado'),
-    path('FormaPago/', views.formaPago, name='FormaPago'),
-    path('Graficos/', views.graficos, name='Graficos'),
-    path('Inventario/', views.inventario, name='Inventario'),
-    path('Pedido/', views.pedido, name='Pedido'),
-    path('Producto/', views.producto, name='Producto'),
-    path('Proveedor/', views.proveedor, name='Proveedor'),
+    path('logout/', views.logout_view, name='logout'),
+    path('Compras/', views.compras, name='compra'),
+    path('DetallePedido/', views.detallePed, name='detallepedido'),
+    path('Domicilio/', views.domicilio, name='domicilio'),
+    path('Estado/', views.estado, name='estado'),
+    path('FormaPago/', views.formaPago, name='formapago'),
+    path('reportes/', views.graficos, name='reportes'),
+    path('Inventario/', views.inventario, name='inventario'),
+    path('Pedido/', views.pedido, name='pedido'),
+    path('Producto/', views.producto, name='producto'),
+    path('Proveedor/', views.proveedor, name='proveedor'),
     path('Rol/', views.rol, name='Rol'),
-    path('TipoProducto/', views.tipoprod, name='TipoProducto'),
-    path('Usuario/', views.usuario, name='Usuario'),
-    path('Ventas/', views.ventas, name='Ventas')
+    path('TipoProducto/', views.tipoprod, name='tipoprod'),
+    path('usuario/', views.usuario, name='usuario'),
+    path('usuario/registro', views.register, name='register'),
+    path('Ventas/', views.ventas, name='Ventas'),
+    path('login/', views.login_view, name='login'),
+    path('lacteos/', views.lacteos, name='lacteos'),
+    path('licores/', views.licores, name='licores'),
+    path('aseo/', views.aseo, name='aseo'),
+    path('despensa/', views.despensa, name='despensa'),
+    path('golosinas/', views.golosinas, name='golosinas'),
+    path('intento/', views.intento, name='intento'),
+    path('menu/', views.menu, name='menu')
 ]
+

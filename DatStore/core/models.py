@@ -17,7 +17,7 @@ class TypeProduct (models.Model):
 
     class Meta:
         verbose_name = 'Tipo de Producto'
-        verbose_name_plural = 'Tipo de Productos'
+        verbose_name_plural = 'Tipo de Productos' 
         db_table = 'TipoProducto'
         ordering = ['id']
 
@@ -76,7 +76,7 @@ class WayToPay(models.Model):
         ordering = ['id']
 
 class User(models.Model):
-    id = models.BigIntegerField(primary_key=True, verbose_name="Id del Usuario")
+    id = models.CharField(primary_key=True,max_length=20, verbose_name="Id del Usuario")
     name = models.CharField(max_length=20, verbose_name="Primer nombre del Usuario")
     names = models.CharField(max_length=20, verbose_name="Segundo nombre del Usuario")
     lastn = models.CharField(max_length=20, verbose_name="Primer apellido del Usuario")

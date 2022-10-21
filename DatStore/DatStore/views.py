@@ -1,8 +1,47 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
+from django.contrib.auth import login
+from django.contrib.auth import logout
+from django.contrib.auth import authenticate
+from django.contrib import messages
+from django.http import HttpResponse
+from core.models import Product
+from django.contrib.auth.models import User
 
+from DatStore.forms import RegisterForm  
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+            messages.success(request, 'Bienvenido {}'.format(user.username))
+            return redirect('index')
+        else: 
+            messages.error(request, 'Usuario o contraseña incorrectos')
+    return render(request, 'login.html',{
+
+    })
+
+#LOGINCONF
+
+#//LOGINCONF
+
+def logout_view(request):
+    logout(request)
+    messages.success(request,'Sesion cerrada correctamente')
+    return redirect('login')
+    
 def index(request):
-    return render(request, "index.html", {
+    products = Product.objects.all().order_by('-id')
 
+    return render(request, 'index.html', {
+        'message': 'Catalogo',
+        'title' : 'Productos',
+        'products': products,
     })
 
 def compras(request):
@@ -42,7 +81,54 @@ def tipoprod(request):
     return render (request, "Tipo_prod.html")
 
 def usuario(request):
-    return render (request, "Usuario.html")
+    return render (request, "usuario.html")
 
 def ventas(request):
     return render (request, "Ventas.html")
+
+def lacteos(request):
+    return render (request, "TLacteos.html")
+    
+def licores(request):
+    return render (request, "TLicores.html")
+
+def aseo(request):
+    return render (request, "TAseo.html")
+
+def despensa(request):
+
+    core = Product.objects.all().order_by('-id')
+
+    return render ( request, "TDespensa.html", {
+        'message': 'Catalogo',
+        'products': core,
+    })
+
+def golosinas(request):
+    return render (request, "TGolosinas.html", {
+        'message': 'Catalogo'
+    })
+
+def menu(request):
+    return render (request, "menu.html")
+
+def intento(request):
+    return render (request, "intento.html")
+
+def register(request):
+    form = RegisterForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        username=form.cleaned_data.get('username')
+        email=form.cleaned_data.get('email')
+        password=form.cleaned_data.get('password')
+     
+        user=User.objects.create_user(username, email , password)
+        if user:
+            login(request, user)
+            messages.success(request, 'Usuario creado exitosamente') 
+
+            return redirect('index')
+    return render(request,'register.html', {
+        'form' : form
+    })

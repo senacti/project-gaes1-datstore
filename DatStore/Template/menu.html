@@ -1,0 +1,112 @@
+{% extends 'intento.html' %}
+{% block content %}
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="box-title">Nuestros Trabajadores</h4>
+        </div>
+        <div class="card-body--">
+            <div class="table-stats order-table ov-h">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th class="serial">#</th>
+                            <th class="avatar">Avatar</th>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Cargo</th>
+                            <th>Ventas</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="serial">1.</td>
+                            <td class="avatar">
+                                <div class="round-img">
+                                    <a href="#"><img class="rounded-circle"
+                                            src="" alt=""></a>
+                                </div>
+                            </td>
+                            <td> #001 </td>
+                            <td> <span class="name">Elon Musk</span> </td>
+                            <td> <span class="product">Empleado</span> </td>
+                            <td><span class="count">238</span></td>
+                            <td>
+                                <span class="badge badge-complete">Activo</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="serial">2.</td>
+                            <td class="avatar">
+                                <div class="round-img">
+                                    <a href="#"><img class="rounded-circle"
+                                            src="" alt=""></a>
+                                </div>
+                            </td>
+                            <td> #002 </td>
+                            <td> <span class="name">Bill Gates</span> </td>
+                            <td> <span class="product">Empleado</span> </td>
+                            <td><span class="count">500</span></td>
+                            <td>
+                                <span class="badge badge-pending">Inactivo</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="serial">3.</td>
+                            <td class="avatar">
+                                <div class="round-img">
+                                    <a href="#"><img class="rounded-circle"
+                                            src=""
+                                            alt=""></a>
+                                </div>
+                            </td>
+                            <td> #003 </td>
+                            <td> <span class="name">Cristiano Messi</span> </td>
+                            <td> <span class="product">Admin</span> </td>
+                            <td><span class="count">105</span></td>
+                            <td>
+                                <span class="badge badge-complete">Activo</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="serial">4.</td>
+                            <td class="avatar">
+                                <div class="round-img">
+                                    <a href="#"><img class="rounded-circle"
+                                            src=""
+                                            alt=""></a>
+                                </div>
+                            </td>
+                            <td> #004 </td>
+                            <td> <span class="name">Lionel Ronaldo</span> </td>
+                            <td> <span class="product">Admin</span> </td>
+                            <td><span class="count">725</span></td>
+                            <td>
+                                <span class="badge badge-complete">Activo</span>
+                            </td>
+                        </tr>
+                        <tr class=" pb-0">
+                            <td class="serial">5.</td>
+                            <td class="avatar pb-0">
+                                <div class="round-img">
+                                    <a href="#"><img class="rounded-circle"
+                                            src="" alt=""></a>
+                                </div>
+                            </td>
+                            <td> #005 </td>
+                            <td> <span class="name">Jeff Bezos</span> </td>
+                            <td> <span class="product">Empleado</span> </td>
+                            <td><span class="count">50</span></td>
+                            <td>
+                                <span class="badge badge-pending">Inactivo</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- /.table-stats -->
+        </div>
+    </div> <!-- /.card -->
+</div> <!-- /.col-lg-8 -->
+{% endblock %}
+{% load static %}

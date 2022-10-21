@@ -105,58 +105,58 @@
                 <ul class="nav navbar-nav">
                     <li class="active">
                         <!--INDEX/INICIO-->
-                        <a href="index.html"><i class="menu-icon fa-solid fa-users-viewfinder"></i>Inicio</a>
+                        <a href="index"><i class="menu-icon fa-solid fa-users-viewfinder"></i>Inicio</a>
                     </li>
                     <!--MENU PARTE2-->
                     <li class="menu-title">Productos</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="TLacteos.html" aria-haspopup="true" aria-expanded="false"><i
+                        <a href="{% url 'lacteos' %}" aria-haspopup="true" aria-expanded="false"><i
                                 class="menu-icon fa-solid fa-jug-detergent"></i>Lacteos</a>
-                        <a href="TGolosinas.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'golosinas' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-candy-cane"></i>Golosinas</a>
-                        <a href="TAseo.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'aseo' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-soap"></i>Aseo</a>
-                        <a href="TLicores.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'licores' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-martini-glass-citrus"></i>Licores</a>
-                        <a href="TDespensa.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'despensa' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-bowl-food"></i>Despensa</a>
                     </li>
                     <!--MENU PARTE3-->
                     <li class="menu-title">Herramientas</li><!-- /.menu-title -->
                     <li class="menu-item-has-children">
-                        <a href="usuario.html"> <i class="menu-icon fa-solid fa-user-tie"></i>Usuario</a>
-                        <a href="Rol.html"> <i class="menu-icon fa-solid fa-user-gear"></i>Rol</a>
-                        <a href="Ventas.html" aria-haspopup="true" aria-expanded="false">
+                        <a href="{% url 'usuario' %}"><i class="menu-icon fa-solid fa-user-tie"></i> Usuario</a>
+                        <a href="{% url 'Rol' %}"> <i class="menu-icon fa-solid fa-user-gear"></i>Rol</a>
+                        <a href="{% url 'Ventas' %}" aria-haspopup="true" aria-expanded="false">
                             <i class="menu-icon fa-solid fa-file-arrow-up"></i>Ventas</a>
-                        <a href="Compras.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'compra' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-file-arrow-down"></i>Compras</a>
-                        <a href="Inventario.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'inventario' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-boxes-stacked"></i>Inventario</a>
-                        <a href="Pedido.html" aria-haspopup="true" aria-expanded="false">
+                        <a href="{% url 'inventario' %}" aria-haspopup="true" aria-expanded="false">
                             <i class="menu-icon fa-solid fa-file-invoice-dollar"></i>Pedido</a>
-                        <a href="Det_ped_inv.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'detallepedido' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-file-invoice"></i>Detalle Pedido</a>
-                        <a href="Domicilio.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'domicilio' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-motorcycle"></i>Domicilio</a>
-                        <a href="Forma_pago.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'formapago' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-brands fa-cc-mastercard"></i>Forma De Pago</a>
-                        <a href="Producto.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'producto' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-bottle-water"></i>Producto</a>
-                        <a href="Tipo_prod.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'tipoprod' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-prescription-bottle"></i>Tipo Producto</a>
-                        <a href="proveedor.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'proveedor' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-truck-field-un"></i>Proveedor</a>
-                        <a href="Estado.html" aria-haspopup="true" aria-expanded="false">
+                        <a href="{% url 'estado' %}" aria-haspopup="true" aria-expanded="false">
                             <i class="menu-icon fa-solid fa-thumbs-up"></i>Estado</a>
-                        <a href="Graficos.html" aria-haspopup="true" aria-expanded="false">
+                        <a href="{% url 'reportes' %}" aria-haspopup="true" aria-expanded="false">
                             <i class="menu-icon fa-solid fa-chart-column"></i>Reportes</a>
                     </li>
 
                     <li class="menu-title">Extras</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="../Login.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'login' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-right-to-bracket"></i>Inicio Sesión</a>
-                        <a href="../PROYECTO_ADMIN/usuario.html" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="usuario" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-user-check"></i>Registrarse</a>
                     </li>
                 </ul>
