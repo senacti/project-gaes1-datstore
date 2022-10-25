@@ -1,11 +1,16 @@
+import imp
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from core.views import ProductListView
+from django.conf.urls.static import static
+from django.conf import settings
 from . import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('', views.index, name='index'),
+    path('index', views.index, name='index'),
     path('logout/', views.logout_view, name='logout'),
     path('Compras/', views.compras, name='compra'),
     path('DetallePedido/', views.detallePed, name='detallepedido'),
@@ -25,10 +30,13 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('lacteos/', views.lacteos, name='lacteos'),
     path('licores/', views.licores, name='licores'),
-    path('aseo/', views.aseo, name='aseo'),
+    path('aseo/', ProductListView.as_view(), name='aseo'),
     path('despensa/', views.despensa, name='despensa'),
     path('golosinas/', views.golosinas, name='golosinas'),
     path('intento/', views.intento, name='intento'),
-    path('menu/', views.menu, name='menu')
+    path('productos/', include('core.urls')),
+    path('carrito/', include('carts.urls')),
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

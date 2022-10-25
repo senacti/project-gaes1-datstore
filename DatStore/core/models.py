@@ -1,11 +1,22 @@
+from distutils.command import upload
+from enum import unique
+from itertools import product
+from pyexpat import model
+import uuid
 from django.db import models
 from msilib.schema import Class
 from tabnanny import verbose
-from unittest.util import _MAX_LENGTH
+from django.utils.text import slugify
+from django.db.models.signals import pre_save
+
+
+import core
 
 
 #Lista estados
 chstate= [('Ent', 'Entregado'),('Pen', 'Pendiente'),]
+
+tstate= [('Act', 'Active'),('Ina', 'Inactive'),]
 
 
 
@@ -75,7 +86,7 @@ class WayToPay(models.Model):
         db_table = 'FormaPago'
         ordering = ['id']
 
-class User(models.Model):
+class Users(models.Model):
     id = models.CharField(primary_key=True,max_length=20, verbose_name="Id del Usuario")
     name = models.CharField(max_length=20, verbose_name="Primer nombre del Usuario")
     names = models.CharField(max_length=20, verbose_name="Segundo nombre del Usuario")
@@ -101,7 +112,7 @@ class InventoryEntry(models.Model):
     date = models.DateField(verbose_name="Fecha entrada")
     totalpurchase = models.IntegerField(verbose_name="Total Compra")
     refpayment = models.CharField(max_length=10, verbose_name="Referencia de pago")
-    iduser = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Identificación del Usuario")
+    iduser = models.ForeignKey(Users, on_delete=models.CASCADE, verbose_name="Identificación del Usuario")
     idwaytopay = models.ForeignKey(WayToPay, on_delete=models.CASCADE, verbose_name="Identificación Forma Pago")   
     
     def __str__(self) -> str:
@@ -116,12 +127,19 @@ class InventoryEntry(models.Model):
 class Product(models.Model):
     id = models.BigIntegerField(primary_key=True, verbose_name="Id del producto")
     name = models.CharField(max_length=20, verbose_name="Nombre del producto")
-    stock = models.IntegerField(verbose_name="Descripcion del producto")
-    state = models.CharField(max_length=20, verbose_name="Estado del producto")
+    costp=models.BigIntegerField(verbose_name="Precio producto indiv.", default=10, null=True, blank=True)
+    stock = models.IntegerField(verbose_name="Cantidad del producto")
+    state= models.CharField(max_length=20,choices=tstate, verbose_name="Estado del producto",default='Activo')
+    slug = models.SlugField(null=False, blank=False, unique=True)
+    image = models.ImageField(upload_to='productos/', null=False, blank=False)
     idfksup = models.ForeignKey(Supplier, on_delete=models.CASCADE, verbose_name="Idenfiticación del Proveedor")
     idfktipp = models.ForeignKey(TypeProduct, on_delete=models.CASCADE, verbose_name="Identificación del Tipo Producto")
 
-    def __str__(self) -> str:
+    #def save(self, *args, **kwargs):
+        #self.slug = slugify(self.name)
+        #super(Product, self).save(*args, **kwargs)
+
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -129,6 +147,18 @@ class Product(models.Model):
         verbose_name_plural = 'Productos'
         db_table = 'Producto'
         ordering = ['id']
+
+def set_slug(sender, instance, *args, **kwargs):
+    if instance.name and not instance.slug:
+        slug = slugify(instance.name)
+
+        while Product.objects.filter(slug = slug).exists():
+            slug = slugify(
+                '{}-{}'.format(instance.name, str(uuid.uuid4())[:8]))
+
+        instance.slug = slug
+
+pre_save.connect(set_slug, sender=Product)
  
 class EntryDetail(models.Model):
     quantity = models.IntegerField(verbose_name="Cantidad de la entradad")
@@ -158,11 +188,11 @@ class Order(models.Model):
     #models.CharField(max_length=20,verbose_name="Estado")
     refpay= models.CharField(max_length=20,null=True,verbose_name="Referencia de pago")
     idfkpayform= models.ForeignKey(WayToPay, on_delete=models.CASCADE, verbose_name="Identificación Forma Pago")
-    idfkclient= models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Identificación Cliente")
+    idfkclient= models.ForeignKey(Users, on_delete=models.CASCADE, verbose_name="Identificación Cliente")
+    
 
 class DetOrder(models.Model):
     quant=models.IntegerField(verbose_name="Cantidad productos")
-    costp=models.BigIntegerField(verbose_name="Precio producto indiv.")
     costgp=models.BigIntegerField(verbose_name="Precio grupo producto")
     idfkprod=models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Ifentificación Producto")
     idfkord=models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Identificación Pedidos")
@@ -195,7 +225,7 @@ class Delivery(models.Model):
     direction = models.CharField(max_length=60, verbose_name="Direccion a dónde irá el domicilio")
     price = models.BigIntegerField(verbose_name="Precio del domicilio")
     idPedidoFK = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Identificación Pedido")
-    idEmpleadoFK = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Identificación Empleado")
+    idEmpleadoFK = models.ForeignKey(Users, on_delete=models.CASCADE, verbose_name="Identificación Empleado")
 
     def __str__(self) -> str:
         return self.direction
