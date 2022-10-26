@@ -17,13 +17,7 @@
                                         <div class="row col-10 mt-4">
                                             {% include 'productos/snippets/search.html' %}
                                         </div>
-                                        <div class="row col-12">
-                                            {% for object in product_list %}
-                                            <div class="col.3 mt-5">
-                                                {% include 'productos/snippets/product.html' with product=object %}
-                                            </div>
-                                            {% endfor %}
-                                        </div>
+                                        {% include 'productos/snippets/list.html' %}
                                     </div>
                                 </div>
                             </div>

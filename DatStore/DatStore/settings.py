@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core' 
+    'core',
+    'categories',
 ]
 
 # only if django version >= 3.0

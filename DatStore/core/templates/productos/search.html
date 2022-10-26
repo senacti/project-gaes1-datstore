@@ -10,12 +10,8 @@
                             <div class="card-body col-12">
                                 {% include 'productos/snippets/search.html' with query=query %}
                                 <hr>
-                                <p>Resultados para: {{ query }}</p>
-                                {% for object in product_list %}
-                                <div class="card-body col-3">
-                                    {% include 'productos/snippets/product.html' with product=object %}
-                                </div>
-                                {% endfor %}
+                                <p>Resultados para: {{ query }} ({{ count }})</p>
+                                {% include 'productos/snippets/list.html' %}
                             </div>
                         </div>
                     </div>
