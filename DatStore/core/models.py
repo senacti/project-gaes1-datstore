@@ -8,7 +8,7 @@ from msilib.schema import Class
 from tabnanny import verbose
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
-
+from django.contrib.auth.decorators import login_required
 
 import core
 
@@ -33,10 +33,10 @@ class TypeProduct (models.Model):
         ordering = ['id']
 
 class Supplier(models.Model):
-    id = models.IntegerField(primary_key=True, verbose_name="Id del proveedor")
-    name = models.CharField(max_length=20, verbose_name="Nombre del proveedor")
-    phone = models.IntegerField(verbose_name="Número de telefono")
-    email = models.CharField(max_length=30, verbose_name="Email del proveedor")
+    id = models.PositiveIntegerField(primary_key=True, verbose_name="Id del proveedor")
+    name = models.TextField(max_length=20, verbose_name="Nombre del proveedor")
+    phone = models.PositiveIntegerField(verbose_name="Número de telefono")
+    email = models.EmailField(max_length=30, verbose_name="Email del proveedor")
     direction = models.CharField(max_length=50,verbose_name="Direccion del proveedor")
     state = models.CharField(max_length=15,verbose_name="Estado del proveedor")
 
@@ -62,7 +62,7 @@ class Rol (models.Model):
         ordering = ['id']
 
 class Permission(models.Model):
-    name = models.CharField(max_length=20, verbose_name="Nombre del permiso")
+    name = models.TextField(max_length=20, verbose_name="Nombre del permiso")
     idprodFK = models.ManyToManyField(Rol, verbose_name="Nombre del Rol")
 
     def __str__(self) -> str:
@@ -75,7 +75,7 @@ class Permission(models.Model):
         ordering = ['id']
 
 class WayToPay(models.Model):
-    name = models.CharField(max_length=15, verbose_name="Nombre de la forma de pago")
+    name = models.TextField(max_length=15, verbose_name="Nombre de la forma de pago")
 
     def __str__(self) -> str:
         return self.name
@@ -87,16 +87,16 @@ class WayToPay(models.Model):
         ordering = ['id']
 
 class Users(models.Model):
-    id = models.CharField(primary_key=True,max_length=20, verbose_name="Id del Usuario")
-    name = models.CharField(max_length=20, verbose_name="Primer nombre del Usuario")
-    names = models.CharField(max_length=20, verbose_name="Segundo nombre del Usuario")
-    lastn = models.CharField(max_length=20, verbose_name="Primer apellido del Usuario")
-    lastns = models.CharField(max_length=20, verbose_name="Segundo apellido del Usuario")
+    id = models.PositiveIntegerField(primary_key=True, verbose_name="Id del Usuario")
+    name = models.TextField(max_length=20, verbose_name="Primer nombre del Usuario")
+    names = models.TextField(max_length=20, verbose_name="Segundo nombre del Usuario")
+    lastn = models.TextField(max_length=20, verbose_name="Primer apellido del Usuario")
+    lastns = models.TextField(max_length=20, verbose_name="Segundo apellido del Usuario")
     address = models.CharField(max_length=50, verbose_name="Direccion del Usuario")
-    email = models.CharField(max_length=30, verbose_name="Correo del Usuario")
+    email = models.EmailField(max_length=30, verbose_name="Correo del Usuario")
     password = models.CharField(max_length=20, verbose_name="Contraseña del Usuario")
-    telephone = models.BigIntegerField(verbose_name="Numero del Celular")
-    condition = models.CharField(max_length=15, verbose_name="Estado del Usuario")
+    telephone = models.PositiveIntegerField(verbose_name="Numero del Celular")
+    condition = models.TextField(max_length=15, verbose_name="Estado del Usuario")
     idrolfk = models.ForeignKey(Rol, on_delete=models.CASCADE, verbose_name="Identificación del Rol")
 
     def __str__(self) -> str:
@@ -110,7 +110,7 @@ class Users(models.Model):
  
 class InventoryEntry(models.Model):
     date = models.DateField(verbose_name="Fecha entrada")
-    totalpurchase = models.IntegerField(verbose_name="Total Compra")
+    totalpurchase = models.PositiveBigIntegerField(verbose_name="Total Compra")
     refpayment = models.CharField(max_length=10, verbose_name="Referencia de pago")
     iduser = models.ForeignKey(Users, on_delete=models.CASCADE, verbose_name="Identificación del Usuario")
     idwaytopay = models.ForeignKey(WayToPay, on_delete=models.CASCADE, verbose_name="Identificación Forma Pago")   
@@ -125,10 +125,10 @@ class InventoryEntry(models.Model):
         ordering = ['id']
 
 class Product(models.Model):
-    id = models.BigIntegerField(primary_key=True, verbose_name="Id del producto")
-    name = models.CharField(max_length=20, verbose_name="Nombre del producto")
-    costp=models.BigIntegerField(verbose_name="Precio producto indiv.", default=10, null=True, blank=True)
-    stock = models.IntegerField(verbose_name="Cantidad del producto")
+    id = models.PositiveIntegerField(primary_key=True, verbose_name="Id del producto")
+    name = models.TextField(max_length=20, verbose_name="Nombre del producto")
+    costp=models.PositiveIntegerField(verbose_name="Precio producto indiv.", default=10, null=True, blank=True)
+    stock = models.PositiveBigIntegerField(verbose_name="Cantidad del producto")
     state= models.CharField(max_length=20,choices=tstate, verbose_name="Estado del producto",default='Activo')
     slug = models.SlugField(null=False, blank=False, unique=True)
     image = models.ImageField(upload_to='productos/', null=False, blank=False)
@@ -161,10 +161,10 @@ def set_slug(sender, instance, *args, **kwargs):
 pre_save.connect(set_slug, sender=Product)
  
 class EntryDetail(models.Model):
-    quantity = models.IntegerField(verbose_name="Cantidad de la entradad")
+    quantity = models.PositiveIntegerField(verbose_name="Cantidad de la entradad")
     dateexpiry = models.DateField(verbose_name="Fecha caducidad de los productos")
-    purchaseprice = models.BigIntegerField(verbose_name="Precio de compra de los productos")
-    groupcost = models.BigIntegerField(verbose_name="Coste del grupo de productos")
+    purchaseprice = models.PositiveIntegerField(verbose_name="Precio de compra de los productos")
+    groupcost = models.PositiveIntegerField(verbose_name="Coste del grupo de productos")
     idprodFK = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Identificación del producto")
     identinvFK = models.ForeignKey(InventoryEntry, on_delete=models.CASCADE, verbose_name="Identificación Entrada Inventario")
    
@@ -179,7 +179,7 @@ class EntryDetail(models.Model):
 
 class Order(models.Model):
     date = models.DateField(verbose_name="Fecha del pedido")
-    total= models.BigIntegerField(verbose_name="Total del pedido")
+    total= models.PositiveIntegerField(verbose_name="Total del pedido")
     chtd= [    ('Dom', 'Domicilio'),
     ('Tie', 'Tienda'),]
     typedel = models.CharField(max_length=4,choices=chtd, verbose_name="Tipo Entrega")
@@ -192,8 +192,8 @@ class Order(models.Model):
     
 
 class DetOrder(models.Model):
-    quant=models.IntegerField(verbose_name="Cantidad productos")
-    costgp=models.BigIntegerField(verbose_name="Precio grupo producto")
+    quant=models.PositiveIntegerField(verbose_name="Cantidad productos")
+    costgp=models.PositiveIntegerField(verbose_name="Precio grupo producto")
     idfkprod=models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Ifentificación Producto")
     idfkord=models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Identificación Pedidos")
 
@@ -207,7 +207,7 @@ class DetOrder(models.Model):
         ordering = ['id']
 
 class Inventoryoutput (models.Model):
-    amount = models.IntegerField(verbose_name="Cantidad de la Salida")
+    amount = models.PositiveIntegerField(verbose_name="Cantidad de la Salida")
     dateout = models.DateField(verbose_name="Fecha de la Salida")
     idprofk = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Identificación Producto")
     iddepefk = models.ForeignKey(Order,on_delete=models.CASCADE, verbose_name="Identificación Detalle Pedido")
@@ -223,7 +223,7 @@ class Inventoryoutput (models.Model):
 
 class Delivery(models.Model):
     direction = models.CharField(max_length=60, verbose_name="Direccion a dónde irá el domicilio")
-    price = models.BigIntegerField(verbose_name="Precio del domicilio")
+    price = models.PositiveIntegerField(verbose_name="Precio del domicilio")
     idPedidoFK = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Identificación Pedido")
     idEmpleadoFK = models.ForeignKey(Users, on_delete=models.CASCADE, verbose_name="Identificación Empleado")
 
@@ -238,5 +238,3 @@ class Delivery(models.Model):
         
         
         
-    
-    

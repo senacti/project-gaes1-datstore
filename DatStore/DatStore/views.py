@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 from core.models import Product
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
 
 from DatStore.forms import RegisterForm
 
@@ -46,23 +48,23 @@ def index(request):
         'products': products,
     })
 
-
+@login_required
 def compras(request):
     return render(request, "Compras.html")
 
-
+@login_required
 def detallePed(request):
     return render(request, "Det_Ped_inv.html")
 
-
+@login_required
 def domicilio(request):
     return render(request, "Domicilio.html")
 
-
+@login_required
 def estado(request):
     return render(request, "Estado.html")
 
-
+@login_required
 def formaPago(request):
     return render(request, "Forma_pago.html")
 
@@ -74,7 +76,7 @@ def graficos(request):
 def inventario(request):
     return render(request, "Inventario.html")
 
-
+@login_required
 def pedido(request):
     return render(request, "Pedido.html")
 
@@ -82,15 +84,15 @@ def pedido(request):
 def producto(request):
     return render(request, "Producto.html")
 
-
+@login_required
 def proveedor(request):
     return render(request, "Proveedor.html")
 
-
+@login_required
 def rol(request):
     return render(request, "Rol.html")
 
-
+@login_required
 def tipoprod(request):
     return render(request, "Tipo_prod.html")
 
@@ -99,6 +101,7 @@ def usuario(request):
     return render(request, "usuario.html")
 
 
+@login_required
 def ventas(request):
     return render(request, "Ventas.html")
 
@@ -121,7 +124,6 @@ def aseo(request):
         'products': products,
     })
 
-
 def despensa(request):
     return render(request, "TDespensa.html")
 
@@ -131,7 +133,8 @@ def golosinas(request):
 def intento(request):
     return render(request, "base.html")
 
-
+def intento(request):
+    return render(request, "base.html")
 
 def register(request):
     form = RegisterForm(request.POST or None)
