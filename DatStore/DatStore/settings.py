@@ -12,6 +12,7 @@ from pathlib import Path
 import os
 import DatStore.db as db
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,13 +32,16 @@ SECRET_KEY = 'django-insecure-pnd$hqgs3x2z)jvyhmwmwob#ag%rr_p_jepoar8(ftxano$ijg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+LOGIN_URL = "/login"
+
 ALLOWED_HOSTS = []
 
-LOGIN_URL = "/login"
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'captcha',
     'carts',
     'users',
     'admin_interface',
@@ -50,7 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'categories',
-    'import_export'
+    'import_export',
+    'crispy_forms',
 ]
 
 # only if django version >= 3.0
@@ -131,6 +136,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ["static"]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+RECAPTCHA_PUBLIC_KEY = '6LeMsdkiAAAAABqxqsZkijZVPD8PMCOZyTXs0eA6'
+RECAPTCHA_PRIVATE_KEY = '6LeMsdkiAAAAAMXpuzfh3IxtSMMEsuv2L6qcbUtu'
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -146,5 +157,5 @@ EMAIL_USE_TLS=True
 EMAIL_HOST_USER='cjmiranda135@misena.edu.co'
 EMAIL_HOST_PASSWORD='Miranda110404.'
 
-
+PASSWORD_RESET_TIMEOUT = 14400
 

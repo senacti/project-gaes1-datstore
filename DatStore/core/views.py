@@ -16,10 +16,11 @@ class ProductListView(ListView):
 
         return context
 
+
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'productos/producto.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -27,11 +28,13 @@ class ProductDetailView(DetailView):
 
         return context
 
+
 class ProductSearchListView(ListView):
     template_name = 'productos/search.html'
 
     def get_queryset(self):
-        filters = Q(name__icontains=self.query()) | Q(category__name__icontains=self.query())
+        filters = Q(name__icontains=self.query()) | Q(
+            category__name__icontains=self.query())
         return Product.objects.filter(filters)
 
     def query(self):
@@ -41,5 +44,6 @@ class ProductSearchListView(ListView):
         context = super().get_context_data(**kwargs)
         context['query'] = self.query()
         context['count'] = context['product_list'].count()
-        
+
         return context
+

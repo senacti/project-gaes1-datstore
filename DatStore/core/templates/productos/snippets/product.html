@@ -7,7 +7,7 @@
         <h5 class="card-tittle">{{ product.name }}</h5>
         <p class="card-text">{{ product.stock }}</p>
         <p class="card-text">${{ product.costp }}</p>
-        <a href="{% url 'core:producto' product.slug %}" class="btn btn-primary">Ver más</a>
+        <a href="{% url 'core:producto' product.slug %}" class="btn btn-primary col-12">Ver más</a>
         <div class="mt-2">
             {% include 'carts/snippets/add.html' %}
         </div>

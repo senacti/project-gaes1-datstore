@@ -80,7 +80,7 @@ class ProductAdmin(admin.ModelAdmin):
 """""
 
 class ProductAdmin(ImportExportModelAdmin):
-    fields = ('name','costp', 'stock', 'state', 'idfksup', 'idfktipp', 'image')
+    fields = ('id','name','costp', 'stock', 'state', 'idfksup', 'idfktipp', 'image')
     list_display = ('__str__', 'slug', 'image')
 
 admin.site.register(Product, ProductAdmin);

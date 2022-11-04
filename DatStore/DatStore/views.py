@@ -3,14 +3,12 @@ from django.shortcuts import redirect
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate
-from django.contrib import messages
 from django.http import HttpResponse
 from core.models import Product
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
-
-from DatStore.forms import RegisterForm
+from django.contrib import messages
+from django.views.generic import TemplateView
 
 
 def login_view(request):
@@ -20,13 +18,12 @@ def login_view(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            messages.success(request, 'Bienvenido {}'.format(user.username))
+            messages.success(
+                request, 'Bienvenido {} que disfrutes tu estadía'.format(user.username))
             return redirect('index')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
-    return render(request, 'login.html', {
-
-    })
+    return render(request, 'login.html', {})
 
 # LOGINCONF
 
@@ -38,6 +35,31 @@ def logout_view(request):
     messages.success(request, 'Sesion cerrada correctamente')
     return redirect('login')
 
+# REGISTERCONFIG
+
+
+def register(request):
+    form = RegisterForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        username = form.cleaned_data.get('username')
+        email = form.cleaned_data.get('email')
+        password = form.cleaned_data.get('password')
+
+        user = User.objects.create_user(username, email, password)
+        if user:
+            login(request, user)
+            messages.success(request, 'Usuario creado exitosamente')
+            return redirect('index')
+        else:
+            messages.error(request, 'Usuario o contraseña incorrectos')
+
+    return render(request, 'register.html', {
+        'form': form
+    })
+
+# EROR 404
+
 
 def index(request):
     products = Product.objects.all().order_by('-id')
@@ -48,21 +70,26 @@ def index(request):
         'products': products,
     })
 
+
 @login_required
 def compras(request):
     return render(request, "Compras.html")
+
 
 @login_required
 def detallePed(request):
     return render(request, "Det_Ped_inv.html")
 
+
 @login_required
 def domicilio(request):
     return render(request, "Domicilio.html")
 
+
 @login_required
 def estado(request):
     return render(request, "Estado.html")
+
 
 @login_required
 def formaPago(request):
@@ -76,6 +103,7 @@ def graficos(request):
 def inventario(request):
     return render(request, "Inventario.html")
 
+
 @login_required
 def pedido(request):
     return render(request, "Pedido.html")
@@ -84,13 +112,16 @@ def pedido(request):
 def producto(request):
     return render(request, "Producto.html")
 
+
 @login_required
 def proveedor(request):
     return render(request, "Proveedor.html")
 
+
 @login_required
 def rol(request):
     return render(request, "Rol.html")
+
 
 @login_required
 def tipoprod(request):
@@ -120,36 +151,22 @@ def aseo(request):
 
     return render(request, 'TAseo.html', {
         'message': 'Catalogo',
-        'tittle' : 'Productos',
+        'tittle': 'Productos',
         'products': products,
     })
+
 
 def despensa(request):
     return render(request, "TDespensa.html")
 
+
 def golosinas(request):
     return render(request, "TGolosinas.html")
 
-def intento(request):
-    return render(request, "base.html")
 
 def intento(request):
     return render(request, "base.html")
 
-def register(request):
-    form = RegisterForm(request.POST or None)
 
-    if request.method == 'POST' and form.is_valid():
-        username = form.cleaned_data.get('username')
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-
-        user = User.objects.create_user(username, email, password)
-        if user:
-            login(request, user)
-            messages.success(request, 'Usuario creado exitosamente')
-
-            return redirect('index')
-    return render(request, 'register.html', {
-        'form': form
-    })
+def intento(request):
+    return render(request, "base.html")

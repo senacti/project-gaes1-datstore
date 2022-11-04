@@ -10,9 +10,10 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('index', views.index, name='index'),
+    path('', views.index, name='index'),
     path('logout/', views.logout_view, name='logout'),
     path('Compras/', views.compras, name='compra'),
     path('DetallePedido/', views.detallePed, name='detallepedido'),
@@ -26,8 +27,6 @@ urlpatterns = [
     path('Proveedor/', views.proveedor, name='proveedor'),
     path('Rol/', views.rol, name='Rol'),
     path('TipoProducto/', views.tipoprod, name='tipoprod'),
-    path('usuario/', views.usuario, name='usuario'),
-    path('usuario/registro', views.register, name='register'),
     path('Ventas/', views.ventas, name='Ventas'),
     path('login/', views.login_view, name='login'),
     path('lacteos/', views.lacteos, name='lacteos'),
@@ -36,8 +35,10 @@ urlpatterns = [
     path('despensa/', views.despensa, name='despensa'),
     path('golosinas/', views.golosinas, name='golosinas'),
     path('intento/', views.intento, name='intento'),
+    path('usuario/', views.usuario, name='usuario'),
     path('productos/', include('core.urls')),
     path('carrito/', include('carts.urls')),
+    path('usuario/', include('users.urls')),
     path('reset_password/',auth_views.PasswordResetView.as_view(), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),

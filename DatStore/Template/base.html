@@ -1,5 +1,4 @@
 {% load static %}
-{% url 'carts:cart' as cart%}
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -96,7 +95,7 @@
             height: 300px;
         }
 
-        .header-left{
+        .header-left {
             display: flex;
             align-items: center;
         }
@@ -195,7 +194,8 @@
                             </form>
                         </div>
                         <div>
-                            <a href="{{ cart }}"><i class="white-color icon-menu fa-solid fa-cart-shopping"></i></a>
+                            <a href="{% url 'carts:cart'%}"><i
+                                    class="white-color icon-menu fa-solid fa-cart-shopping"></i></a>
                         </div>
                     </div>
                     <!--User panel left-->
@@ -204,7 +204,7 @@
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             <img class="user-avatar rounded-circle"
-                                src="{% static 'images/avatar/leo-messi-seguira-barcelona-foto.jpg' %}"
+                                src="{% static 'images/avatar/usuario.png' %}"
                                 alt="User Avatar">
                         </a>
                         <div class="user-menu dropdown-menu">
@@ -219,6 +219,7 @@
         <!-- /#header -->
         <!-- Content -->
         <!-- /.content -->
+        {% include 'messaging.html' %}
         {% block content %}
         {% endblock %}
         <!-- Footer -->
@@ -233,6 +234,19 @@
         </footer>
         <!-- /.site-footer -->
     </div>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if messages %}
+        {% for m in messages %}
+            <script>
+                Swal.fire({
+                    tittle: "Bienvenido",
+                    text:"{{m}}",
+                    icon:"success"
+                })
+            </script>
+        {% endfor %}
+    {% endif %}
     <!-- /#right-panel -->
 
     <!-- Scripts -->
@@ -259,6 +273,8 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="{% static 'js/init/fullcalendar-init.js' %}"></script>
+
+
 
     <!--Local Stuff-->
     <script>
