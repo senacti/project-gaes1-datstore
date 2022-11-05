@@ -1,4 +1,3 @@
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -106,41 +105,44 @@
 
 <body>
     <div>
-    {% include 'messaging.html' %}
-    {% csrf_token %}
-    <div class="login-box">
-        <div class="contenido">
-            <img src="{% static 'images/DatStorenigga.ico' %}" class="avatar" alt="Avatar Image">
-            <h1>Inicio De Sesión</h1>
-            <form class="col-12" method="post">
-                {% csrf_token %}
-                <div class="form" id="labels">
-                    <input id="txtCorreo" name="username" class="text" type="text" maxlength="70"
-                        pattern="[A-Za-z]+{0,40}" title="Solo letras y 70 letras" required>
-                    <label sout class="lbl" for="txtCorreo">
-                        <span class="txt">Correo Electronico</span>
-                    </label>
-                </div>
-                <br>
-                <div class="form" id="labels">
-                    <input id="txtContrasena" name="password" type="password" maxlength="20" pattern="[a-zA-Z]+{0-20}"
-                        title="Solo letras y un maximo de 20 caracteres" required>
-                    <label sout class="lbl" for="txtContrasena">
-                        <span class="txt">Contraseña</span>
-                    </label>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary col-12">Login</button>
-                <hr>
-                <div class="text-center">
-                    <a href="{% url 'reset_password' %}">Olvidé mi contraseña</a>
-                </div>
-                <br>
-                <a type="input" href="{% url 'users:register' %}" class="btn btn-success col-12">Crear una nueva cuenta</a>
-                <br>
-            </form>
+        {% include 'messaging.html' %}
+        {% csrf_token %}
+        <div class="login-box">
+            <div class="contenido">
+                <img src="{% static 'images/DatStorenigga.ico' %}" class="avatar" alt="Avatar Image">
+                <h1>Inicio De Sesión</h1>
+                <form class="col-12" method="post">
+                    {% csrf_token %}
+                    <div class="form" id="labels">
+                        <input id="txtCorreo" name="username" class="text" type="text" maxlength="70"
+                            pattern="[A-Za-z]+{0,40}" title="Solo letras y 70 letras" required>
+                        <label sout class="lbl" for="txtCorreo">
+                            <span class="txt">Correo Electronico</span>
+                        </label>
+                    </div>
+                    <br>
+                    <div class="form" id="labels">
+                        <input id="txtContrasena" name="password" type="password" maxlength="20"
+                            pattern="[a-zA-Z]+{0-20}" title="Solo letras y un maximo de 20 caracteres" required>
+                        <label sout class="lbl" for="txtContrasena">
+                            <span class="txt">Contraseña</span>
+                        </label>
+                    </div>
+                    <br>
+                    <div>
+                        <button type="submit" class="btn btn-primary col-12">Login</button>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <a href="{% url 'reset_password' %}">Olvidé mi contraseña</a>
+                    </div>
+                    <hr>
+                    <a type="input" href="{% url 'users:register' %}" class="btn btn-success col-12">Crear una nueva
+                        cuenta</a>
+                    <br>
+                </form>
+            </div>
         </div>
-    </div>
     </div>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

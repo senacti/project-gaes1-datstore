@@ -9,6 +9,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import TemplateView
+from django.shortcuts import render
+
+
+def Error_404(request, exception):
+    return render(request, 'error404.html')
 
 
 def login_view(request):

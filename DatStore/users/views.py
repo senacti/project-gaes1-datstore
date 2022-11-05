@@ -28,10 +28,10 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
 
-        messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
+        messages.success(request, 'Gracias por su confirmación por correo electrónico. Ahora puede iniciar sesión en su cuenta.')
         return redirect('login')
     else:
-        messages.error(request, 'Activation link is invalid!')
+        messages.error(request, 'Link de activación inválido')
     return redirect('index')
 
 
@@ -47,7 +47,7 @@ def activateEmail(request, user, to_email):
     )
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
-        messages.success(request,f'Querido <b>{user}</b>, por favor ve a tu email <b>{to_email} </b>  y checa tu inbox.')
+        messages.success(request,f'Querido {user}, por favor ve a tu email {to_email} y checa tu inbox.')
     else:
         message.error(request,f'Problema al enviar el email {to_email}')
 
