@@ -12,17 +12,14 @@
         <button type="submit" class="btn btn-warning col-12"><i class="icon-menu fa-solid fa-cart-shopping"></i>Agregar</button>
     </div>
 </form>
-
 <script>
-
     const add = document.getElementById('add')
     const remove = document.getElementById('remove')
     const quantity = document.getElementById('quantity')
-
     add.addEventListener('click', function(){
         quantity.value = parseInt(quantity.value) + 1
+        console.log(quantity.value);
     })
-
     remove.addEventListener('click', function(){
         value = parseInt(quantity.value)
 
@@ -30,7 +27,6 @@
             value = value - 1
         }
         quantity.value = value
+        console.log(quantity.value);
     })
-
-
 </script>

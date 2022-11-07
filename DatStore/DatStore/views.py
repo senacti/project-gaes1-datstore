@@ -5,12 +5,44 @@ from django.contrib.auth import logout
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from core.models import Product
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from users.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import TemplateView
 from django.shortcuts import render
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 
+def contacto(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        email = request.POST['email']
+        subject = request.POST['subject']
+        message = request.POST['message']
+        
+        template = render_to_string('email_template.html', {
+            'name': name,
+            'email': email,
+            'message': message
+        })
+    
+        email = EmailMessage(
+            subject,
+            template,
+            settings.EMAIL_HOST_USER,
+            [email, 'cjmiranda135@gmail.com']
+        )
+    
+        email.fail_silently = False
+        email.send()
+
+
+    return render(request, 'contactos.html',{
+        
+    })
 
 def Error_404(request, exception):
     return render(request, 'error404.html')
@@ -25,6 +57,10 @@ def login_view(request):
             login(request, user)
             messages.success(
                 request, 'Bienvenido {} que disfrutes tu estadía'.format(user.username))
+
+            if request.GET.get('next'):
+                return HttpResponseRedirect(request.GET['next'])
+
             return redirect('index')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
@@ -143,11 +179,25 @@ def ventas(request):
 
 
 def lacteos(request):
-    return render(request, "TLacteos.html")
+
+    products = Product.objects.all().order_by('-id')
+
+    return render(request, "TLacteos.html", {
+        'message': 'Catalogo',
+        'tittle': 'Productos',
+        'products': products,
+    })
 
 
 def licores(request):
-    return render(request, "TLicores.html")
+
+    products = Product.objects.all().order_by('-id')
+
+    return render(request, "TLicores.html", {
+        'message': 'Catalogo',
+        'tittle': 'Productos',
+        'products': products,
+    })
 
 
 def aseo(request):
@@ -162,11 +212,25 @@ def aseo(request):
 
 
 def despensa(request):
-    return render(request, "TDespensa.html")
+
+    products = Product.objects.all().order_by('-id')
+
+    return render(request, "TDespensa.html", {
+        'message': 'Catalogo',
+        'tittle': 'Productos',
+        'products': products,
+    })
 
 
 def golosinas(request):
-    return render(request, "TGolosinas.html")
+
+    products = Product.objects.all().order_by('-id')
+
+    return render(request, "TGolosinas.html", {
+        'message': 'Catalogo',
+        'tittle': 'Productos',
+        'products': products,
+    })
 
 
 def intento(request):

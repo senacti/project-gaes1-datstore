@@ -5,15 +5,13 @@
         {% endif %}
         <div class="card-body">
             <br>
-            <div class="h5">{{product.name}}</div>
+            <div class="h6">{{product.name}}</div>
             <hr>
-            <div class="h6">Precio: <span class="text-info">${{product.costp}}</span></div>
+            <div class="h8">Precio: <span class="text-info">${{product.costp}}</span></div>
             <hr>
-            <div class="h6">Disponibles: <span class="text-danger">{{product.stock}}</div>
+            <div class="h8">Disponibles: <span class="text-danger">{{product.stock}}</div>
+                <br>
             <a href="{% url 'core:producto' product.slug %}" class="btn btn-primary col-12">Ver más</a>
-            <div class="mt-2">
-                {% include 'carts/snippets/add.html' %}
-            </div>
         </div>
     </div>
 </div>

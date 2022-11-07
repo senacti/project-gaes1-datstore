@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block breadcrum %}
+
+{% include 'orders/snippets/breadcrum.html' %}
+
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="orders">
+        <div class="row">
+            <div class="col-11 ml-3">
+                {% if shipping_address %}
+                    <div class="h3">
+                        Recoge el pedido en el punto de entrega
+                    </div>
+                    <div class="">
+                        {% include 'shipping_addresses/snippets/shipping_address.html' %}
+                        <a href="">Elige una dirección</a>
+                    </div>
+                {% else %}
+                    <div class="h3">
+                        Registra tu direccion de envío
+                    </div>
+                    <div class="">
+                        {% url 'orders:address' as next_url %}
+                        <a href="{% url 'shipping_addresses:create' %}?next={{ next_url }}" class="btn btn-success">Nueva dirección de envío</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="content">
+   <div class="orders">
+      <div class="row">
+         <div class="col-11 ml-3">
+            <div class="h3">
+               Editar dirección
+            </div>
+            <div class="">
+               {% include 'shipping_addresses/snippets/form.html' with message='Actualizar' %}
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

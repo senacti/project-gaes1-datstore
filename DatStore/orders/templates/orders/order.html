@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block breadcrum %}
+{% include 'orders/snippets/breadcrum.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+    <div class="orders">
+        <div class="row">
+            <div class="col-7">
+                <div class=" h3 ml-3">
+                    Revisa tu pedido
+                </div>
+                <div class="card ml-3">
+                    <div class="card-body">
+                        {% for product in cart.products.all %}
+                        {% include 'orders/snippets/product.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col mr-3">
+                {% include 'orders/snippets/resume.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

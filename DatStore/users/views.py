@@ -37,7 +37,7 @@ def activate(request, uidb64, token):
 
 def activateEmail(request, user, to_email):
     mail_subject="Activa tu cuenta de usuario"
-    message= render_to_string("template_activate_account.html",{
+    message= render_to_string("correodiseno.html",{
         'user':user.username,
         'domain': get_current_site(request).domain,
         'uid':urlsafe_base64_encode(force_bytes(user.pk)),
@@ -77,7 +77,4 @@ def register(request):
         template_name= 'users/register.html', 
         context={'form': form}
     )
-
-
-
 

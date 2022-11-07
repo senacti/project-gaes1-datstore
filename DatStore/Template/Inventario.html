@@ -4,53 +4,43 @@
 <div class="content">
     <div class="orders">
         <div class="row">
-            <div class="col-12">
-                <div class="row d-flex">
-                    <div class="col-lg-5 col-xl-12">
-                        <div class="card bg-flat-color-0">
-                            <div class="card-body">
-                                <form class="f1 col-md-12">
-                                    <h2>Registro De Datos</h2>
-                                    <br>
-                                    <div class="form">
-                                        <input type="text" name="txtIdInv" id="txtIdInv" maxlength="3"
-                                            pattern="[0-9]{0,3}"
-                                            title="Solo puedes digitar maximo 3 numeros para el Inventario" required>
-                                        <label class="lbl">
-                                            <span class="txt">Identificación</span>
-                                        </label>
-                                    </div>
-                                    <div class="form">
-                                        <input type="text" name="txtCantinv" id="txtCantinv" maxlength="4"
-                                            pattern="[0-9]{0,4}"
-                                            title="Solo puedes digitar maximo 4 numeros para la cantidad actual en el Inventario"
-                                            required>
-                                        <label class="lbl">
-                                            <span class="txt">Cantidad Actual</span>
-                                        </label>
-                                    </div>
-                                    <div class="form">
-                                        <input type="text" name="txtCantinv" id="txtCantinv" maxlength="4"
-                                            pattern="[0-9]{0,4}"
-                                            title="Solo puedes digitar maximo 4 numeros para la cantidad actual en el Inventario"
-                                            required>
-                                        <label class="lbl">
-                                            <span class="txt">Identificación Producto</span>
-                                        </label>
-                                    </div>
-                                    <br>
-                                    <div id="button" class="selected">
-                                        <a href="#" type="button" class="btn btn-success">Insertar</a>
-                                        <a href="#" type="button" class="btn btn-primary">Consultar</a>
-                                        <a href="#" type="button" class="btn btn-warning">Modificar</a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+            <div class="card-body">
+                <form class="f1 col-md-12">
+                    <h2>Registro De Datos</h2>
+                    <br>
+                    <div class="form">
+                        <input type="text" name="txtIdInv" id="txtIdInv" maxlength="3" pattern="[0-9]{0,3}"
+                            title="Solo puedes digitar maximo 3 numeros para el Inventario" required>
+                        <label class="lbl">
+                            <span class="txt">Identificación</span>
+                        </label>
                     </div>
-                </div>
+                    <div class="form">
+                        <input type="text" name="txtCantinv" id="txtCantinv" maxlength="4" pattern="[0-9]{0,4}"
+                            title="Solo puedes digitar maximo 4 numeros para la cantidad actual en el Inventario"
+                            required>
+                        <label class="lbl">
+                            <span class="txt">Cantidad Actual</span>
+                        </label>
+                    </div>
+                    <div class="form">
+                        <input type="text" name="txtCantinv" id="txtCantinv" maxlength="4" pattern="[0-9]{0,4}"
+                            title="Solo puedes digitar maximo 4 numeros para la cantidad actual en el Inventario"
+                            required>
+                        <label class="lbl">
+                            <span class="txt">Identificación Producto</span>
+                        </label>
+                    </div>
+                    <br>
+                    <div id="button" class="selected">
+                        <a href="#" type="button" class="btn btn-success">Insertar</a>
+                        <a href="#" type="button" class="btn btn-primary">Consultar</a>
+                        <a href="#" type="button" class="btn btn-warning">Modificar</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

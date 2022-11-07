@@ -7,6 +7,7 @@ from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 
 
+
 class UserRegistrationForm(UserCreationForm):
   email=forms.EmailField(help_text='A valid email',required=True)
   captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
@@ -21,3 +22,4 @@ class UserRegistrationForm(UserCreationForm):
       user.save()
       
     return user
+  

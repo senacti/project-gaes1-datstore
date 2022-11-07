@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'captcha',
     'carts',
     'users',
+    'orders',
     'admin_interface',
+    'shipping_addresses',
     'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,6 +75,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'DatStore.urls'
+
+AUTH_USER_MODEL='users.User'
 
 TEMPLATES = [
     {

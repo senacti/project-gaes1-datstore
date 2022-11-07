@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<title>Contacto</title>
+<div class="content">
+    <div class="orders">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="chart-container ov-h">
+                       
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h2>Contáctenos</h2>
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="name">Usuario</label>
+                                            <input type="text" name="name" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" name="email" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="subject">Asunto</label>
+                                            <input type="text" name="subject" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message">Mensaje</label>
+                                            <input type="text" name="message" class="form-control">
+                                        </div>
+                                        <br>
+                                        <button type="submit" class="btn btn-primary">Enviar</button>
+                                        <br>
+                                    </form>
+                                </div>
+                            </div>
+                            <br>
+                            <h5>Télefono de domicilios: 68000000</h5>
+                        </div>
+                        <script src="{% static 'js/main.js' %}"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

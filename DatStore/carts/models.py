@@ -25,18 +25,32 @@ class Cart(models.Model):
         self.update_subtotal()
         self.update_total()
 
+        if self.order:
+            self.order.update_total()
+
     def update_subtotal(self):
         self.subtotal = sum([
             cp.quantity * cp.product.costp for cp in self.products_related()
         ])
         self.save()
 
+
     def update_total(self):
-        self.total = self.subtotal
+        self.total=sum([
+            cp.quantity * cp.product.costp for cp in self.products_related()
+        ])
         self.save()
 
+        order = self.order_set.first()
+        if order:
+            order.update_total()
+            
     def products_related(self):
         return self.cartproducts_set.select_related('product')
+
+    @property
+    def order(self):
+        return self.order_set.first()
 
 
 class CartProductsManager(models.Manager):

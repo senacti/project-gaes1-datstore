@@ -1,3 +1,61 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+<title>Inicio</title>
+<link rel="stylesheet" href="{% static 'css/styleIndex.css' %}">
+<div class="content">
+    <div class="orders">
+        <div class="row col-md-12 ml-1">
+            <div class="slider">
+                <ul>
+                    <li>
+                        <img class="img" src="{% static 'images/index/detodito.jpg' %}">
+                    </li>
+                    <li>
+                        <img class="img" src="{% static 'images/index/catCerveza.png' %}">
+                    </li>
+                    <li>
+                        <img class="img" src="{% static 'images/index/h2o.jpg' %}">
+                    </li>
+                    <li>
+                        <img class="img" src="{% static 'images/index/gaseosa.jpg' %}">
+                    </li>
+                </ul>
+            </div>
+            
+            <div id="e" class="row ml-3 col-12" >
+                <h2>Compra por categorias</h2>
+            </div>
+            <div class="n col-12">
+                <div class="row div col-3">
+                    <a href="{% url 'licores' %}"><img class="p" src="{% static 'images/index/aguardiente.jpg' %}"
+                            alt="">
+                        Licores</a>
+                </div>
+                <div class="row div col-3 ml-3">
+                    <a href="{% url 'despensa' %}"><img class="p" src="{% static 'images/index/despensa.png' %}"
+                            alt="">
+                        Despensa</a>
+                </div>
+                <div class="row div col-3 ml-3">
+                    <a href="{% url 'aseo' %}"><img class="p" src="{% static 'images/index/aseo.webp' %}"
+                            alt="">
+                        Aseo</a>
+                </div>
+            </div>
+            <div class="n col-12">
+                <div class="row div col-3">
+                    <a href="{% url 'lacteos' %}"><img class="p" src="{% static 'images/index/lacteos.webp' %}"
+                            alt="">
+                        Lacteos</a>
+                </div>
+                <div class="row div col-3 ml-3">
+                    <a href="{% url 'despensa' %}"><img class="p" src="{% static 'images/index/golosinas.webp' %}"
+                            alt="">
+                        Golosinas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

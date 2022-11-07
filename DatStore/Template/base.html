@@ -1,4 +1,5 @@
 {% load static %}
+{% url 'shipping_addresses:shipping_addresses' as shipping_addresses%}
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -184,22 +185,33 @@
             </div>
             <div class="top-right">
                 <div class="header-menu">
-                    <div class="header-left">
-                        <button class="search-trigger"><i class="white-color fa fa-search"></i></button>
-                        <div class="form-inline">
-                            <form class="search-form">
-                                <input class="form-control mr-sm-2" type="text" placeholder="Search ..."
-                                    aria-label="Search">
-                                <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
-                            </form>
+                    
+                    <div class="header-left" style="padding-top:12px">
+                        <div style="padding-right: 15px;">
+                            {% if not user.is_authenticated %}
+                            <a href="{% url 'login' %}" class="white-color">Iniciar sesión<i class="white-color icon-menu fa-solid fa-sign-in"></i></a>
+                            {% endif %}
+                        </div>
+                        <div style="padding-right: 15px;">
+                            {% if not user.is_authenticated %}
+                            <a href="{% url 'users:register' %}" class="white-color">Registrate<i class="white-color icon-menu fa-solid fa-sign-in"></i></a>
+                            {% endif %}
+                        </div>
+                        <div style="padding-right: 15px;">
+                            <a href="{% url 'contacto' %}" class="white-color">Contactenos</a>
                         </div>
                         <div>
-                            <a href="{% url 'carts:cart'%}"><i
-                                    class="white-color icon-menu fa-solid fa-cart-shopping"></i></a>
+                            <a href="{% url 'carts:cart'%}" class="white-color"><i
+                                    class="white-color icon-menu fa-solid fa-cart-shopping"></i> Mi Carrito</a>
+                        </div>
+                        <div class="ml-3">
+                            {% if user.is_authenticated %}
+                            <a href="{{ shipping_addresses }}" class="white-color"><i class="white-color icon-menu fa-solid fa-location-arrow"></i> Mis Direcciones</a>
+                            {% endif %}
                         </div>
                     </div>
                     <!--User panel left-->
-
+                    {% if user.is_authenticated %}
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
@@ -212,6 +224,8 @@
                                     class="icon-menu fa-solid fa-circle-xmark"></i>Cerrar Sesión</a>
                         </div>
                     </div>
+                    {% endif %}
+                    
                 </div>
             </div>
         </header>
@@ -219,6 +233,8 @@
         <!-- Content -->
         <!-- /.content -->
         {% include 'messaging.html' %}
+        {% block breadcrum %}
+        {% endblock %}
         {% block content %}
         {% endblock %}
         <!-- Footer -->
@@ -247,7 +263,7 @@
     {% endfor %}
     {% endif %}
     <!-- /#right-panel -->
-    
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
@@ -255,7 +271,7 @@
     <script src="{% static 'js/main.js' %}"></script>
 
     <script>
-        function cerrarSesion(id){
+        function cerrarSesion(id) {
             Swal.fire({
                 title: '¿Estás seguro?',
                 text: 'Cerrarás tu sesión, se perderá el proceso que estás realizando',
@@ -266,14 +282,14 @@
                 confirmButtonColor: '#8B0000',
                 cancelButtonColor: '#191970',
             })
-            .then(function(result){
-                if(result.isConfirmed){
-                    window.location.href = "{% url 'logout' %}"
-                }
-            })
+                .then(function (result) {
+                    if (result.isConfirmed) {
+                        window.location.href = "{% url 'logout' %}"
+                    }
+                })
         }
     </script>
-    
+
     <!--
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
