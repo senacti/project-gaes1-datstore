@@ -8,9 +8,20 @@
         <button type="button" class="btn btn-info col-3" id="add">+</button>
     </div>
 
-    <div class="mt-2">
-        <button type="submit" class="btn btn-warning col-12"><i class="icon-menu fa-solid fa-cart-shopping"></i>Agregar</button>
-    </div>
+    {% if product.stock == 0 %}
+
+        <div class="mt-2">
+            <p type="#" class="btn btn-warning col-12 disabled"><i class="icon-menu fa-solid fa-cart-shopping"></i>Agregar</p>
+        </div>
+
+    {% else %}
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-warning col-12"><i class="icon-menu fa-solid fa-cart-shopping"></i>Agregar</button>
+        </div>
+
+    {% endif %}
+
 </form>
 <script>
     const add = document.getElementById('add')

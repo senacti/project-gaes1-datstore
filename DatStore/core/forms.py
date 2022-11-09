@@ -3,4 +3,5 @@ from .models import InventoryEntry
 
 class EntInvForm(ModelForm):
     class Meta:
-        model =
+        model = InventoryEntry
+        fields=['date','totalpurchase','refpayment','idwaytopay']

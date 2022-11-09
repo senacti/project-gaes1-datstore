@@ -144,11 +144,6 @@ def formaPago(request):
 def graficos(request):
     return render(request, "Graficos.html")
 
-
-def inventario(request):
-    return render(request, "Ent_Inventario.html")
-
-
 @login_required
 def pedido(request):
     return render(request, "Pedido.html")

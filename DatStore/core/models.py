@@ -111,7 +111,7 @@ class Users(models.Model):
 class InventoryEntry(models.Model):
     date = models.DateField(verbose_name="Fecha entrada")
     totalpurchase = models.PositiveBigIntegerField(verbose_name="Total Compra")
-    refpayment = models.CharField(max_length=10, verbose_name="Referencia de pago")
+    refpayment = models.CharField(max_length=10, verbose_name="Referencia de pago", null=True, blank=True)
     iduser = models.ForeignKey(Users, on_delete=models.CASCADE, verbose_name="Identificación del Usuario")
     idwaytopay = models.ForeignKey(WayToPay, on_delete=models.CASCADE, verbose_name="Identificación Forma Pago")   
     

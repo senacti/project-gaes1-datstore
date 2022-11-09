@@ -30,6 +30,8 @@ def add(request):
                                                                 product=product, 
                                                                 quantity=quantity)
 
+    
+
     new_stock = product.stock - quantity
     product.stock = new_stock
     product.save()

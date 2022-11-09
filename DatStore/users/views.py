@@ -46,8 +46,7 @@ def activateEmail(request, user, to_email):
         'uid':urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
         "protocol": 'https' if request.is_secure() else 'http'
-    }
-    )
+    })
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
         messages.success(request,f'Querido {user}, por favor ve a tu email {to_email} y checa tu inbox.')
