@@ -12,10 +12,10 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col">
-                                    <h2>Contáctenos</h2>
+                                    <h2 >Contáctenos</h2>
                                     <form method="post">
                                         {% csrf_token %}
-                                        <div class="form-group">
+                                        <div class="form-group mt-2">
                                             <label for="name">Usuario</label>
                                             <input type="text" name="name" class="form-control">
                                         </div>
@@ -39,6 +39,7 @@
                             </div>
                             <br>
                             <h5>Télefono de domicilios: 68000000</h5>
+                            <a href="https://api.whatsapp.com/send/?phone=%2B573025021767&text&type=phone_number&app_absent=0" class="succes">Escribenos a WhatsApp</a>
                         </div>
                         <script src="{% static 'js/main.js' %}"></script>
                     </div>

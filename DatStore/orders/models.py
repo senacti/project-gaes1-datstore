@@ -1,24 +1,15 @@
-from django.db import models
+import uuid
 
-from enum import Enum
 from django.db import models
 
 from users.models import User
 from carts.models import Cart
-from django.db.models.signals import pre_save
-import uuid
 from shipping_addresses.models import ShippingAddress
-import sys
 
-sys.setrecursionlimit(1500)
+from .common import OrderStatus
+from .common import choices
 
-class OrderStatus(Enum):
-    CREATED='CREATED'
-    PAYED='PAYED'
-    COMPLETED='COMPLETED'
-    CANCELED='CANCELED'
-
-choices=[ (tag, tag.value) for tag in OrderStatus ]
+from django.db.models.signals import pre_save
 
 class Order(models.Model):
     order_id=models.CharField(max_length=100, null=False, blank=False, unique=True)
@@ -51,6 +42,14 @@ class Order(models.Model):
     def update_shipping_address(self, shipping_address):
         self.shipping_address=shipping_address
         self.save()
+
+    def complete(self):
+        self.status=OrderStatus.COMPLETED
+        self.save()
+
+    def cancel(self):
+        self.status=OrderStatus.CANCELED
+        self.save
  
 
     def update_total(self):

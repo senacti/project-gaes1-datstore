@@ -1,5 +1,6 @@
 {% load static %}
 {% url 'shipping_addresses:shipping_addresses' as shipping_addresses%}
+{% url 'orders:completeds' as completeds %}
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -120,8 +121,9 @@
                                 class="menu-icon fa-solid fa-jug-detergent"></i>Lacteos</a>
                         <a href="{% url 'golosinas' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-candy-cane"></i>Golosinas</a>
-                        <a href="{% url 'aseo' %}" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'aseo' %}" onclick="setexa()" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-soap"></i>Aseo</a>
+                          
                         <a href="{% url 'licores' %}" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-martini-glass-citrus"></i>Licores</a>
                         <a href="{% url 'despensa' %}" aria-haspopup="true" aria-expanded="false"> <i
@@ -185,28 +187,18 @@
             </div>
             <div class="top-right">
                 <div class="header-menu">
-                    
+
                     <div class="header-left" style="padding-top:12px">
                         <div style="padding-right: 15px;">
                             {% if not user.is_authenticated %}
-                            <a href="{% url 'login' %}" class="white-color">Iniciar sesión<i class="white-color icon-menu fa-solid fa-sign-in"></i></a>
+                            <a href="{% url 'login' %}" class="white-color">Iniciar sesión
+                                <i class="white-color icon-menu fa-solid fa-sign-in"></i></a>
                             {% endif %}
                         </div>
                         <div style="padding-right: 15px;">
                             {% if not user.is_authenticated %}
-                            <a href="{% url 'users:register' %}" class="white-color">Registrate<i class="white-color icon-menu fa-solid fa-sign-in"></i></a>
-                            {% endif %}
-                        </div>
-                        <div style="padding-right: 15px;">
-                            <a href="{% url 'contacto' %}" class="white-color">Contactenos</a>
-                        </div>
-                        <div>
-                            <a href="{% url 'carts:cart'%}" class="white-color"><i
-                                    class="white-color icon-menu fa-solid fa-cart-shopping"></i> Mi Carrito</a>
-                        </div>
-                        <div class="ml-3">
-                            {% if user.is_authenticated %}
-                            <a href="{{ shipping_addresses }}" class="white-color"><i class="white-color icon-menu fa-solid fa-location-arrow"></i> Mis Direcciones</a>
+                            <a href="{% url 'users:register' %}" class="white-color">
+                                <i class="white-color icon-menu fa-solid fa-sign-in"></i> Registrate</a>
                             {% endif %}
                         </div>
                     </div>
@@ -220,12 +212,24 @@
                         </a>
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="#"><i class="icon-menu fa-solid fa-user-lock"></i>Mi Perfil</a>
+                            <a href="{% url 'contacto' %}" class="nav-link"><i
+                                    class="icon-menu fa-solid fa-solid fa-phone"></i> Contáctenos</a>
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'carts:cart'%}" class="nav-link"><i
+                                    class="icon-menu fa-solid fa-cart-shopping"></i> Mi Carrito</a>
+
+                            <a href="{{ shipping_addresses }}" class="nav-link"><i
+                                    class="icon-menu fa-solid fa-location-arrow"></i> Mis Direcciones</a>
+
+                            <a href="{{ completeds }}" class="nav-link"><i
+                                    class="icon-menu fa-solid fa-bag-shopping"></i> Mis Compras</a>
+                            {% endif %}
                             <a class="nav-link" href="#" onclick="cerrarSesion()"><i
                                     class="icon-menu fa-solid fa-circle-xmark"></i>Cerrar Sesión</a>
                         </div>
                     </div>
                     {% endif %}
-                    
+
                 </div>
             </div>
         </header>

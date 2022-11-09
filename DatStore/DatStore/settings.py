@@ -58,7 +58,32 @@ INSTALLED_APPS = [
     'categories',
     'import_export',
     'crispy_forms',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+SITE_ID = 1
+SOCIALACCOUNT_LOGIN_ON_GET=True
+
+AUTHENTICATION_BACKENDS = ['allauth.account.auth_backends.AuthenticationBackend']
+
+LOGIN_REDIRECT_URL = '/login'
+LOGOUT_REDIRECT_URL = '/logout'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 # only if django version >= 3.0
 X_FRAME_OPTIONS = "SAMEORIGIN"
@@ -133,6 +158,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT='587'
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER='cjmiranda135@misena.edu.co'
+EMAIL_HOST_PASSWORD='Miranda110404.'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -154,12 +185,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT='587'
-EMAIL_USE_TLS=True
-EMAIL_HOST_USER='cjmiranda135@misena.edu.co'
-EMAIL_HOST_PASSWORD='Miranda110404.'
+
 
 PASSWORD_RESET_TIMEOUT = 14400
 

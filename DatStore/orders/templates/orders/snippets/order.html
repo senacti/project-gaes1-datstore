@@ -1,0 +1,69 @@
+{% load product_extras %}
+<style>
+
+</style>
+<div class="content">
+    <div class="orders">
+        <div class="row col-12">
+            <div class="card mb-2 col-12">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="text-uppercase">
+                                Pedido realizado
+                            </div>
+                            <div>
+                                {{ order.created_at }}
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="text-uppercase">
+                                Total
+                            </div>
+                            <div>
+                                {{ order.total | price_format }}
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-uppercase">
+                                Enviado a
+                            </div>
+                            <div>
+                                {{ order.shipping_address }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% for cp in order.cart.products_related %}
+                    {% with product=cp.product %}
+                    <div class="row">
+                        <div class="col-5">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="" width="80" height="80">
+                            {% endif %}
+                        </div>
+                        <div class="col-3">
+                            <div>
+                                {{ product.name }}
+                            </div>
+                            <div class="text-danger">
+                                {{ product.costp }}
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                Cantidad
+                            </div>
+                            <div>
+                                {{ cp.quantity }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,6 +12,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from .tokens import account_activation_token
+from django.shortcuts import redirect
+
+from .mails import Mail
 
 
 from .forms import UserRegistrationForm
@@ -37,7 +40,7 @@ def activate(request, uidb64, token):
 
 def activateEmail(request, user, to_email):
     mail_subject="Activa tu cuenta de usuario"
-    message= render_to_string("correodiseno.html",{
+    message= render_to_string("template_activate_account.html",{
         'user':user.username,
         'domain': get_current_site(request).domain,
         'uid':urlsafe_base64_encode(force_bytes(user.pk)),

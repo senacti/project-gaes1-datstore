@@ -2,6 +2,7 @@
 from django.db import models
 from users.models import User
 from core.models import Product
+from orders.common import OrderStatus
 from django.db.models.signals import pre_save, post_save
 import uuid
 
@@ -50,7 +51,7 @@ class Cart(models.Model):
 
     @property
     def order(self):
-        return self.order_set.first()
+        return self.order_set.filter(status=OrderStatus.CREATED).first()
 
 
 class CartProductsManager(models.Manager):

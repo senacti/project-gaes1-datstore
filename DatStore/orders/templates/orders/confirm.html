@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block breadcrum %}
+{% include 'orders/snippets/breadcrum.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="orders">
+        <div class="row">
+            <div class="col-11 ml-3">
+                <div class="h3">
+                    Confirma tu pedido
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="font-weight-bold">
+                                        <h5 class="text-success">Direccion de Envio</h5>
+                                    </div>
+                                    <div class="cart-text">
+                                        <h6>{{ shipping_address.address }}</h6>
+                                    </div>
+                                    <div class="card-text">
+                                        <h6>{{ shipping_address.line1 }}</h6>
+                                    </div>
+                                    <div class="card-text">
+                                        <h6>{{ shipping_address.reference }}</h6>
+                                    </div>
+                                    <div class="card-text">
+                                        <h6>{{ shipping_address.postal_code }}</h6>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="font-weight-bolf">
+                                        Metodo de pago
+                                    </div>
+                                    <div class="card-text">
+                                        <h6>Tarjeta terminacion 4242</h6>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="font-weight-bold">
+                                        <strong><h5>Codigo Promocional</h5></strong>
+                                    </div>
+                                    <form>
+                                     <input type="text" name="code" value="" class="form-control" placeholder="Codigo Promoción">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <div class="card">
+                            <div class="card-body" style="font-size: 25px;">
+                                <h5>
+                                {% for product in cart.products.all %}
+                                  <h5>
+                                  {% include 'orders/snippets/product.html'%}
+                                  <h5>
+                                {% endfor %}
+                                <h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col">
+ {% url 'orders:complete' as next_url %}
+ {% include 'orders/snippets/resume.html' with next_url=next_url%}
+ <div class="mt-2">
+    <a href="{% url 'orders:cancel' %}" class="btn btn-danger">Cancelar Orden</a>
+ </div>
+</div>
+{% endblock %}

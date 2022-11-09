@@ -30,6 +30,10 @@ def add(request):
                                                                 product=product, 
                                                                 quantity=quantity)
 
+    new_stock = product.stock - quantity
+    product.stock = new_stock
+    product.save()
+
     return render(request, 'carts/add.html', {
         'quantity': quantity,
         'cart_product': cart_product,
@@ -39,8 +43,16 @@ def add(request):
 def remove(request):
     cart = get_or_create_cart(request)
     product = get_object_or_404(Product, pk=request.POST.get('product_id'))
+
+    #restablecimiento del stock
+
+    p = cart.cartproducts_set.get(product_id = request.POST.get('product_id'))
+    product.stock = product.stock + p.quantity
+    product.save()
+
     messages.success(request, 'Producto eliminado correctamente')
     cart.products.remove(product)
     messages
+
 
     return redirect('carts:cart')

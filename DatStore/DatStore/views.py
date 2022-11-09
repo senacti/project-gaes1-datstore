@@ -14,7 +14,11 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.template.loader import get_template
+
+
 
 def contacto(request):
     if request.method == "POST":
@@ -22,7 +26,7 @@ def contacto(request):
         email = request.POST['email']
         subject = request.POST['subject']
         message = request.POST['message']
-        
+
         template = render_to_string('email_template.html', {
             'name': name,
             'email': email,
@@ -142,7 +146,7 @@ def graficos(request):
 
 
 def inventario(request):
-    return render(request, "Inventario.html")
+    return render(request, "Ent_Inventario.html")
 
 
 @login_required
@@ -237,5 +241,3 @@ def intento(request):
     return render(request, "base.html")
 
 
-def intento(request):
-    return render(request, "base.html")
