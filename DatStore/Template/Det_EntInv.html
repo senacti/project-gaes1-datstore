@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<!-- Fengyuan Chen's Datepicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+<div class="content-section col-lg-12 col-md-12 col-sm-12 tutorial-style" style="min-height:65vh;">
+<title>Inventario</title>
+<div class="content">
+    <div class="orders">
+        <div class="row">
+            <div class="card-body d-flex">
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <h1>Gestión detalle ent.</h1>
+                    {{error}}
+                <form method="POST" class="f1 col-md-12">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    
+                    <script>
+                        $(function () {
+                            $("#id_dateexpiry").datepicker({
+                            format:'dd/mm/yyyy',
+                            });
+                        });
+
+                        $(function () {
+                            id_identinvFK.disabled = true;
+                        });
+                    </script>
+                    <input type="submit" name="Save">
+                </form>
+
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Cantidad</th>
+                                    <th>Precio compra</th>
+                                    <th>Precio grupal</th>
+                                    <th>Expiración</th>
+                                    <th>Producto</th>
+                                    <th>Id entrada</th>
+                                    <th colspan="2">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for e in detenv %}
+                                    <tr>
+                                        <td>{{e.quantity}}</td>
+                                        <td>{{e.purchaseprice}}</td>
+                                        <td>{{e.groupcost}}</td>
+                                        <td>{{e.dateexpiry}}</td>
+                                        <td>{{e.idprodFK}}</td>
+                                        <td>{{e.identinvFK}}</td>
+                                        <td><a href="{% url 'core:det_ent_inv_det' e.pk %}" class="btn btn-info">Editar</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

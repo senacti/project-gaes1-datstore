@@ -1,20 +1,54 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 <title>Inventario</title>
 <div class="content">
     <div class="orders">
         <div class="row">
-            <div class="card-body">
-                <form action="/Ent_Inventario" class="f1 col-md-12">
-                    {{form}}
+            <div class="card-body d-flex">
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <h1>Gestión entrada inv.</h1>
+                <form method="POST" class="f1 col-md-12">
+                    {% csrf_token %}
+                    {{form.as_p}}
 
-                    <div id="button" class="selected">
-                        <a href="#" type="button" class="btn btn-success">Insertar</a>
-                        <a href="#" type="button" class="btn btn-primary">Consultar</a>
-                        <a href="#" type="button" class="btn btn-warning">Modificar</a>
-                    </div>
+                    <input type="submit" name="Save">
                 </form>
+
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Fecha</th>
+                                    <th>Total compra</th>
+                                    <th>Referencia pago</th>
+                                    <th>Forma pago</th>
+                                    <th colspan="2">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for e in entradas %}
+                                    <tr>
+                                        <td>{{e.pk}}</td>
+                                        <td>{{e.date}}</td>
+                                        <td>{{e.totalpurchase}}</td>
+                                        <td>{{e.refpayment}}</td>
+                                        <td>{{e.idwaytopay}}</td>
+                                        <td><a href="{% url 'core:ent_inv_det' e.pk %}" class="btn btn-info">Editar</a></td>
+                                        <td><a href="{% url 'core:Det_EntInv' e.pk %}" class="btn btn-info">Detalles</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+
             </div>
+            
         </div>
     </div>
 </div>

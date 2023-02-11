@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<title>Inventario</title>
+<div class="content">
+    <div class="orders">
+        <div class="row">
+            <div class="card-body d-flex">
+                <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                    <h1>Gestión Domicilio.</h1>
+                    <br>
+                    {{ error }}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <h3>{{ordv}}</h3>
+                        {{form.as_p}}
+                        
+                        <script>
+                            $(function () {
+                                $("#id_dateexpiry").datepicker({
+                                format:'dd/mm/yyyy',
+                                });
+                            });
+    
+                            $(function () {
+                                id_idpedidoFK.disabled = true;
+                            });
+                        </script>
+                        
+                        <input type="submit" name="Save">
+                    </form>
+
+                </div>
+                <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for e in carp %}
+                                    <tr>
+                                        <td>{{e.id}}</td>
+                                        <td>{{e.product}}</td>
+                                        <td>{{e.quantity}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

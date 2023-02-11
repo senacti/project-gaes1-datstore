@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<!-- Fengyuan Chen's Datepicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+<div class="content-section col-lg-12 col-md-12 col-sm-12 tutorial-style" style="min-height:65vh;">
+    <legend class="border-bottom mb-4">Perfil:</legend>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="media">
+            <div class="media-body">
+                <h2 class="account-heading">{{ form.instance.username }}
+                    <small class="text-muted">({{ form.instance.status }})</small>
+                </h2>
+                <p class="text-secondary">{{ form.instance.first_name }} {{ form.instance.last_name }}</p>
+                <p class="text-secondary">{{ form.instance.email }}</p>
+                <p class="text-secondary">{{ form.instance.phone }}</p>
+            </div>
+        </div>
+
+        {% if user.username == form.instance.username %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Editar perfil</legend>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.first_name|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.last_name|as_crispy_field }}
+                    </div>
+                </div> 
+                {{ form.email|as_crispy_field }}
+
+                
+                {{ form.phone|as_crispy_field }}
+                
+
+                {{ form.birthdate|as_crispy_field }}
+
+
+                <script>
+                $(function () {
+                    $("#id_birthdate").datepicker({
+                    format:'dd/mm/yyyy',
+                    });
+                });
+                </script>
+                
+
+
+                <a href="/">Change password?</a>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        {% endif %}
+    </form>
+</div>
+{% endblock content %}

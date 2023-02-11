@@ -86,8 +86,10 @@ def check_address(request, cart, order, pk):
 @validate_cart_and_order
 def confirm(request, cart, order):
     shipping_address = order.shipping_address
+    
     if shipping_address is None:
         return redirect('orders:address')
+    
 
     return render(request, 'orders/confirm.html', {
         'cart': cart,
@@ -120,6 +122,9 @@ def complete(request, cart, order):
         return redirect('carts:cart')
 
     order.complete()
+    orderad = get_object_or_404(Order, order_id=order.order_id)
+    orderad.address=order.shipping_address.direct
+    orderad.save()
 
     thread = threading.Thread(target=Mail.send_complete_order, args=(
         order, request.user

@@ -3,7 +3,7 @@ from unicodedata import name
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from core.views import ProductListView
+from core.views import ProductListView,ProductSearchListViewCAT
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views     
@@ -17,7 +17,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('Compras/', views.compras, name='compra'),
     path('DetallePedido/', views.detallePed, name='detallepedido'),
-    path('Domicilio/', views.domicilio, name='domicilio'),
     path('Estado/', views.estado, name='estado'),
     path('FormaPago/', views.formaPago, name='formapago'),
     path('reportes/', views.graficos, name='reportes'),
@@ -28,11 +27,11 @@ urlpatterns = [
     path('TipoProducto/', views.tipoprod, name='tipoprod'),
     path('Ventas/', views.ventas, name='Ventas'),
     path('login/', views.login_view, name='login'),
-    path('lacteos/', views.lacteos, name='lacteos'),
-    path('licores/', views.licores, name='licores'),
+    path('lacteos/', ProductListView.as_view(), name='lacteos'),
+    path('licores/', ProductListView.as_view(), name='licores'),
     path('aseo/', ProductListView.as_view(), name='aseo'),
-    path('despensa/', views.despensa, name='despensa'),
-    path('golosinas/', views.golosinas, name='golosinas'),
+    path('despensa/', ProductListView.as_view(), name='despensa'),
+    path('golosinas/', ProductSearchListViewCAT.as_view(), name='golosinas'),
     path('intento/', views.intento, name='intento'),
     path('usuario/', views.usuario, name='usuario'), 
     path('contacto', views.contacto, name='contacto'),
@@ -40,12 +39,16 @@ urlpatterns = [
     path('carrito/', include('carts.urls')),
     path('usuario/', include('users.urls')),
     path('orden/', include('orders.urls')),
+    path('pagos/', include('billing_profiles.urls')),
     path('direcciones/', include('shipping_addresses.urls')),
+    path('codigos/', include('promo_codes.urls')),
     path('reset_password/',auth_views.PasswordResetView.as_view(), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
     path("", include("allauth.urls")),
+    path('pdf/', views.PDFView.as_view(), name='PDFView'), 
+    path('form/', views.form, name='form'), 
 ]
 
 if settings.DEBUG:

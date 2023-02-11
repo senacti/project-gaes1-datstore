@@ -13,7 +13,7 @@ class UserRegistrationForm(UserCreationForm):
   captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
   class Meta:
     model=get_user_model()
-    fields =['first_name','last_name','username','email','password1','password2']
+    fields =['first_name','last_name','username','email','phone','password1','password2']
 
   def save(self, commit=True):
     user = super(UserRegistrationForm, self).save(commit=False)
@@ -23,3 +23,14 @@ class UserRegistrationForm(UserCreationForm):
       
     return user
   
+class UserUpdateForm(forms.ModelForm):
+  email= forms.EmailField()
+
+  class Meta:
+    model= get_user_model()
+    fields= ['first_name','last_name','email','birthdate','phone']
+
+
+
+class DateForm(forms.Form):
+  date = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'])

@@ -4,7 +4,19 @@ from django.contrib.auth.models import AbstractUser
 from orders.common import OrderStatus
 
 
+froles= [('Adm', 'Admin'),('Emp', 'Employee'),('Cli', 'Client'),]
+
+
+
 class User(AbstractUser):
+
+    email=models.EmailField(unique=True,verbose_name="Email")
+    phone = models.PositiveIntegerField(default=0,verbose_name="Teléfono")
+    birthdate=models.DateField(null=True, blank=True,verbose_name="Fecha de nacimiento")
+    
+
+    def __str__(self):
+        return str(self.username)
 
     @property
     def shipping_address(self):
@@ -14,7 +26,7 @@ class User(AbstractUser):
         return '{} {}'.format(self.first_name,self.last_name)
 
     def orders_completed(self):
-        return self.order_set.filter(status=OrderStatus.COMPLETED).order_by('-id')
+         return self.order_set.filter(status=OrderStatus.COMPLETED).order_by('-id')
 
     def has_shipping_addresses(self):
         return self.shippingaddres_set.exists()
@@ -28,11 +40,6 @@ class Customer(User):
         proxy = True
   
         
-class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)    
-    sname=models.CharField(max_length=20)
-    slastname=models.CharField(max_length=20)
-    birthdate=models.DateField()
 
 
     

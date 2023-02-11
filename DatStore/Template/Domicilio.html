@@ -1,58 +1,49 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-<title>Domicilio</title>
+<title>Domicilios</title>
 <div class="content">
     <div class="orders">
         <div class="row">
-            <div class="col-12">
-                <div class="row d-flex">
-                    <div class="col-lg-5 col-xl-12">
-                        <div class="card bg-flat-color-0">
-                            <div class="card-body">
-                                <div class="chart-container ov-h">
-                                    <form class="f1 col-md-12">
-                                        <h2>Registro De Datos</h2>
-                                        <br>
-                                        <div class="form">
-                                            <input type="text" name="txtIdpedido" id="txtIdpedido" maxlength="10"
-                                                pattern="[0-9]{0,10}"
-                                                title="Solo puedes digitar maximo 10 numeros para un pedido" required>
-                                            <label class="lbl" for="txtCanent">
-                                                <span class="txt">Id Domicilio</span>
-                                            </label>
-                                        </div>
-                                        <br>
-                                        <div class="selected">
-                                            <div class="form-group">
-                                                <label for="lb">Estado</label>
-                                                <select name="estado" id="estado" class="sel form-control" required>
-                                                    <option value="" selected>Seleccione</option>
-                                                    <option value="1">Activo</option>
-                                                    <option value="2">Inactivo</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form">
-                                            <input type="text" name="txtDirecli" id="txtDirecli" pattern="{0,80}"
-                                                title="Solo puedes digitar maximo 80 Caracteres para la Direccion de un Proveedor"
-                                                required> <label class="lbl" for="txtCanent">
-                                                <span class="txt">Id Pedido</span>
-                                            </label>
-                                        </div>
-                                        <br>
-                                        <div id="button" class="selected">
-                                            <a href="#" type="button" class="btn btn-success">Insertar</a>
-                                            <a href="#" type="button" class="btn btn-primary">Consultar</a>
-                                            <a href="#" type="button" class="btn btn-warning">Modificar</a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+            <div class="card-body">
+                <h1>Gestión Domicilio</h1>
+
+                
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Dirección</th>
+                                    <th>Precio</th>
+                                    <th>Repartidor</th>
+                                    <th>Id pedido</th>
+                                    <th>Id usuario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for e in dom %}
+                                    <tr>
+                                        <td>{{e.direction}}</td>
+                                        <td>{{e.price}}</td>
+                                        <td>{{e.deliver}}</td>
+                                        <td>{{e.idpedidoFK}}</td>
+                                        <td>{{e.user}}</td>
+                                       
+                                        
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            
+                        </table>
                     </div>
+                    
                 </div>
+
             </div>
+            
         </div>
     </div>
 </div>
+
 {% endblock %}

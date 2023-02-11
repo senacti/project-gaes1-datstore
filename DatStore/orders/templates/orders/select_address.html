@@ -15,8 +15,7 @@
             <div class="card-body">
             <h5 class="card-title"> {{ shipping_address.address }} </h5>
             <p class="card-title"> {{ shipping_address.postal_code }} </p>
-            <a href="{% url 'orders:check_address' pk=1 %}" class="btn btn-warning">
-            Seleccionar
+            <a href="{% url 'orders:check_address' pk=1 %}" class="btn btn-warning" value="Seleccionar">
             </a>
             </div>
             </div>

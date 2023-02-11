@@ -1,28 +1,20 @@
 from email.mime import image
 from django.contrib import admin
-from users.models import Profile
+
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from django.contrib.auth.decorators import login_required
-
-from core.models import Delivery, DetOrder, EntryDetail, InventoryEntry, Inventoryoutput, Order,\
-     Permission, Product, Rol, Supplier, TypeProduct, Users, WayToPay
+from core.models import  DetOrder, EntryDetail, InventoryEntry, Inventoryoutput, Order,\
+      Product, Supplier, TypeProduct, Users, WayToPay
 
 #admin.site.register(TypeProduct);
 #admin.site.register(Supplier);
-#admin.site.register(Rol);
 #admin.site.register(Permission);
 #admin.site.register(WayToPay);
 #admin.site.register(Users);
 #admin.site.register(InventoryEntry);
 #admin.site.register(Profile);
 
-@admin.register(Profile)
-class ProfileAdmi(admin.ModelAdmin):
-    list_display= ["sname","slastname","birthdate"]
-    list_display_links= ["sname","slastname","birthdate"]
-    list_filter=["sname","slastname","birthdate"]
-    search_fields=["sname","slastname","birthdate"]
 
 @admin.register(InventoryEntry)
 class InventoryEntryadmin(ImportExportModelAdmin):
@@ -45,19 +37,9 @@ class SupplierAdmin(admin.ModelAdmin):
     list_display_links = ["name","phone"]
     list_filter= ["name","phone","direction"]
 
-@admin.register(Rol)
-class RolAdmin(admin.ModelAdmin):
-    list_display= ["name"]
-    list_display_links = ["name"]
-    list_filter = ["name"]
 
 
-@admin.register(Permission)
-class PermissionAdmin(admin.ModelAdmin):
-    list_display= ["name"]
-    list_display_links= ["name"]
-    list_filter=["name"]
-    list_per_page = 2
+
 
 
 @admin.register(WayToPay)
@@ -80,7 +62,7 @@ class ProductAdmin(admin.ModelAdmin):
 """""
 
 class ProductAdmin(ImportExportModelAdmin):
-    fields = ('id','name','costp', 'stock', 'state', 'idfksup', 'idfktipp', 'image')
+    fields = ('id','name', 'description', 'costp', 'stock', 'state', 'idfksup', 'idfktipp', 'image')
     list_display = ('__str__', 'slug', 'image')
 
 admin.site.register(Product, ProductAdmin);
@@ -91,11 +73,7 @@ class OrderAdmin(ImportExportModelAdmin):
     list_display_links=["refpay","date"]
     list_filter=["refpay","date"]
 
-@admin.register(Delivery)
-class DeliveryAdmin(ImportExportModelAdmin):
-    list_display=["idPedidoFK","price","idEmpleadoFK"]
-    list_display_links=["price","idPedidoFK","idEmpleadoFK"]
-    list_display_links=["idPedidoFK","idEmpleadoFK"]
+
 
 @admin.register(EntryDetail)
 class EntryDetailAdmin(ImportExportModelAdmin):
@@ -142,11 +120,7 @@ class OrderResource(resources.ModelResource):
         fields = ("refpay","date")
         #export_order = ("refpay","date")
 
-class DeliveryResource(resources.ModelResource):
-    class Meta:
-        model = Delivery
-        fields = ("idPedidoFK","price","idEmpleadoFK")
-        #export_order = ("idPedidoFK","price","idEmpleadoFK")
+
 
 class EntryDetailResource(resources.ModelResource):
     class Meta:

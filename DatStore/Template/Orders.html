@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<title>Inventario</title>
+<div class="content">
+    <div class="orders">
+        <div class="row">
+            <div class="card-body">
+                    
+                <h1>Pendientes</h1>
+                <br>
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Usuario</th>
+                                    <th>Estado</th>
+                                    <th>Total</th>
+                                    <th>Hecho</th>
+                                    <th colspan="2">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for e in ordenes %}
+                                    <tr>
+                                        <td>{{e.pk}}</td>
+                                        <td>{{e.user}}</td>
+                                        <td>{{e.status}}</td>
+                                        <td>{{e.total}}</td>
+                                        <td>{{e.created_at}}</td>
+                                        <td>{{e.delivered_at}}</td>
+                                        <td><a href="{% url 'core:OrderDel' e.pk %}" class="btn btn-info">Entregar</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+                <br>
+                <h1>Entregadas</h1>
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Usuario</th>
+                                    <th>Teléfono</th>
+                                    <th>Estado</th>
+                                    <th>Total</th>
+                                    <th>Hecho</th>
+                                    <th colspan="2">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in prob %}
+                                <tr>
+                                    <td>{{r.pk}}</td>
+                                    <td>{{r.user}}</td>
+                                    <td>{{r.phone}}</td>
+                                    <td>{{r.status}}</td>
+                                    <td>{{r.total}}</td>
+                                    <td>{{r.created_at}}</td>
+                                    <td>{{r.delivered_at}}</td>
+                                    <td><a href="{% url 'core:OrderDel' r.pk %}" class="btn btn-info">Detalles</a></td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

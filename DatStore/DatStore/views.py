@@ -1,10 +1,14 @@
+import os
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
+from django.views.generic import View
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
-from core.models import Product
+from core.models import Supplier, Product
 #from django.contrib.auth.models import User
 from users.models import User
 from django.contrib.auth.decorators import login_required
@@ -116,6 +120,7 @@ def index(request):
     })
 
 
+
 @login_required
 def compras(request):
     return render(request, "Compras.html")
@@ -126,9 +131,7 @@ def detallePed(request):
     return render(request, "Det_Ped_inv.html")
 
 
-@login_required
-def domicilio(request):
-    return render(request, "Domicilio.html")
+
 
 
 @login_required
@@ -235,4 +238,26 @@ def golosinas(request):
 def intento(request):
     return render(request, "base.html")
 
+def form(request):
+    return render(request, "form.html")
 
+
+class PDFView(View):
+    def get(self,request,*args,**kwargs):
+        template = get_template('invoice.html')
+        context = {'tittle': 'PDF Pedidos'}
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+
+        pisa_status = pisa.CreatePDF(
+            html, dest=response)
+        if pisa_status.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+
+        return response
+
+
+def report(request):
+    datos = Supplier.objects.all()
+    return render(request, "invoice.html", {"datos": datos})

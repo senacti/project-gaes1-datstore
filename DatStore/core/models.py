@@ -9,6 +9,8 @@ from tabnanny import verbose
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from django.contrib.auth.decorators import login_required
+from users.models import User
+from django.conf import settings
 
 import core
 
@@ -49,30 +51,8 @@ class Supplier(models.Model):
         db_table = 'Proveedor'
         ordering = ['id']
 
-class Rol (models.Model):
-    name = models.CharField(max_length=30, verbose_name="Nombre del Rol")
 
-    def __str__(self) -> str:
-        return self.name
 
-    class Meta:
-        verbose_name = 'Rol'
-        verbose_name_plural = 'Roles'
-        db_table = 'Rol'
-        ordering = ['id']
-
-class Permission(models.Model):
-    name = models.TextField(max_length=20, verbose_name="Nombre del permiso")
-    idprodFK = models.ManyToManyField(Rol, verbose_name="Nombre del Rol")
-
-    def __str__(self) -> str:
-        return self.name
-
-    class Meta:
-        verbose_name = 'Permiso'
-        verbose_name_plural = 'Categorias'
-        db_table = 'Permiso'
-        ordering = ['id']
 
 class WayToPay(models.Model):
     name = models.TextField(max_length=15, verbose_name="Nombre de la forma de pago")
@@ -97,7 +77,7 @@ class Users(models.Model):
     password = models.CharField(max_length=20, verbose_name="Contraseña del Usuario")
     telephone = models.PositiveIntegerField(verbose_name="Numero del Celular")
     condition = models.TextField(max_length=15, verbose_name="Estado del Usuario")
-    idrolfk = models.ForeignKey(Rol, on_delete=models.CASCADE, verbose_name="Identificación del Rol")
+
 
     def __str__(self) -> str:
         return self.name
@@ -109,14 +89,14 @@ class Users(models.Model):
         ordering = ['id']
  
 class InventoryEntry(models.Model):
-    date = models.DateField(verbose_name="Fecha entrada")
-    totalpurchase = models.PositiveBigIntegerField(verbose_name="Total Compra")
+    date = models.DateField(auto_now_add=True,verbose_name="Fecha entrada")
+    totalpurchase = models.PositiveBigIntegerField(default=0,verbose_name="Total Compra")
     refpayment = models.CharField(max_length=10, verbose_name="Referencia de pago", null=True, blank=True)
-    iduser = models.ForeignKey(Users, on_delete=models.CASCADE, verbose_name="Identificación del Usuario")
+    iduser = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Identificación del Usuario")
     idwaytopay = models.ForeignKey(WayToPay, on_delete=models.CASCADE, verbose_name="Identificación Forma Pago")   
     
-    def __str__(self) -> str:
-        return self.iduser
+    def __int__(self) -> int:
+        return int(self.pk)
         
     class Meta:
         verbose_name= 'EntradaInventario'
@@ -126,7 +106,8 @@ class InventoryEntry(models.Model):
 
 class Product(models.Model):
     id = models.PositiveIntegerField(primary_key=True, verbose_name="Id del producto")
-    name = models.TextField(max_length=20, verbose_name="Nombre del producto")
+    name = models.TextField(max_length=30, verbose_name="Nombre del producto")
+    description = models.TextField(max_length=50, verbose_name="Descripción del producto", null=True, blank=True)
     costp=models.PositiveIntegerField(verbose_name="Precio producto indiv.", default=10, null=True, blank=True)
     stock = models.PositiveBigIntegerField(verbose_name="Cantidad del producto")
     state= models.CharField(max_length=20,choices=tstate, verbose_name="Estado del producto",default='Activo')
@@ -161,15 +142,15 @@ def set_slug(sender, instance, *args, **kwargs):
 pre_save.connect(set_slug, sender=Product)
  
 class EntryDetail(models.Model):
-    quantity = models.PositiveIntegerField(verbose_name="Cantidad de la entradad")
+    quantity = models.PositiveIntegerField(verbose_name="Cantidad de la entrada")
     dateexpiry = models.DateField(verbose_name="Fecha caducidad de los productos")
     purchaseprice = models.PositiveIntegerField(verbose_name="Precio de compra de los productos")
-    groupcost = models.PositiveIntegerField(verbose_name="Coste del grupo de productos")
+    groupcost = models.PositiveIntegerField(verbose_name="Coste del grupo de productos",default=0)
     idprodFK = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Identificación del producto")
     identinvFK = models.ForeignKey(InventoryEntry, on_delete=models.CASCADE, verbose_name="Identificación Entrada Inventario")
    
-    def __str__(self) -> str:
-        return self.idprodFK
+    def __int__(self) -> int:
+        return int(self.pk)
         
     class Meta:
         verbose_name= 'DetalleEntrada'
@@ -221,20 +202,7 @@ class Inventoryoutput (models.Model):
         db_table = 'SalidaInventario'
         ordering = ['id']
 
-class Delivery(models.Model):
-    direction = models.CharField(max_length=60, verbose_name="Direccion a dónde irá el domicilio")
-    price = models.PositiveIntegerField(verbose_name="Precio del domicilio")
-    idPedidoFK = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Identificación Pedido")
-    idEmpleadoFK = models.ForeignKey(Users, on_delete=models.CASCADE, verbose_name="Identificación Empleado")
 
-    def __str__(self) -> str:
-        return self.direction
-
-    class Meta:
-        verbose_name = 'Domicilio'
-        verbose_name_plural = 'Domicilios'
-        db_table = 'Domicilios'
-        ordering = ['id']
         
         
         

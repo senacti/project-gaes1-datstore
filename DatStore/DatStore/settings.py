@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'carts',
     'users',
     'orders',
+    'billing_profiles',
+    'promo_codes',
     'admin_interface',
     'shipping_addresses',
     'colorfield',
@@ -102,6 +104,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'DatStore.urls'
 
 AUTH_USER_MODEL='users.User'
+
+AUTHENTICATION_BACKENDS = ['users.backends.EmailBackend',
+'allauth.account.auth_backends.AuthenticationBackend']
 
 TEMPLATES = [
     {
@@ -165,10 +170,13 @@ EMAIL_USE_TLS=True
 EMAIL_HOST_USER='cjmiranda135@misena.edu.co'
 EMAIL_HOST_PASSWORD='Miranda110404.'
 
+STRIPE_PUBLIC_KEY='pk_test_51M3SZqFDFKA1Kf1GzWsDrDdPD9YAMBMO1OYhdamuOExrqvfZsZfVJKNyY7TcR7kzMDb2x9o8h8O7ASDBDqd3tNT300mIMhUJYP'
+STRIPE_PRIVATE_KEY='sk_test_51M3SZqFDFKA1Kf1G2BASl6Mw393x3LWZ2E6ZVX7lkDJPz1l4Y7E6lUF5RhtUzZXs5YFDV9mokMSbxyFIPR3enJWu00hdyTTcHU'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT= os.path.join(BASE_DIR,"static")
 STATICFILES_DIRS = ["static"]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

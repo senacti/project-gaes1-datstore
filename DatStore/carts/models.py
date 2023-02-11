@@ -11,13 +11,13 @@ from django.db.models.signals import m2m_changed
 
 class Cart(models.Model):
     cart_id = models.CharField(
-        max_length=100, null=False, blank=False, unique=True)
+        max_length=100, null=False, blank=False, unique=True ,verbose_name="Codigo del Carrito") 
     user = models.ForeignKey(
-        User, null=True, blank=True, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, through='CartProducts')
-    subtotal = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
-    total = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
-    created_at = models.DateTimeField(auto_now_add=True)
+        User, null=True, blank=True, on_delete=models.CASCADE ,verbose_name="Usuario")
+    products = models.ManyToManyField(Product, through='CartProducts', verbose_name="Productos")
+    subtotal = models.DecimalField(default=0.0, max_digits=8, decimal_places=2, verbose_name="Subtotal de la compra")
+    total = models.DecimalField(default=0.0, max_digits=8, decimal_places=2, verbose_name="Total" )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Creado el:")
 
     def __str__(self):
         return self.cart_id
@@ -53,6 +53,10 @@ class Cart(models.Model):
     def order(self):
         return self.order_set.filter(status=OrderStatus.CREATED).first()
 
+    class Meta:
+        verbose_name= 'Carrito'
+        verbose_name_plural = 'Carritos'
+        ordering = ['id']
 
 class CartProductsManager(models.Manager):
 
@@ -67,16 +71,22 @@ class CartProductsManager(models.Manager):
 
 
 class CartProducts(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    created_at = models.DateTimeField(auto_now_add=True)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, verbose_name="Carrito")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Producto")
+    quantity = models.IntegerField(default=1, verbose_name="Cantidad")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Creado el:")
 
     objects = CartProductsManager()
 
     def update_quantity(self, quantity=1):
         self.quantity = quantity
         self.save()
+
+    class Meta:
+        verbose_name= 'Producto del Carrito'
+        verbose_name_plural = 'Productos de los Carritos'
+        ordering = ['id']
+
 
 
 def set_cart_id(sender, instance, *args, **kwargs):

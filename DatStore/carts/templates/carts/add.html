@@ -17,11 +17,16 @@
         <div class="">
           {{ product.name }}
         </div>
+        <div class="">
+          {{ product.description }}
+        </div>
         <div class="font-weight-bold text-danger">
           ${{ product.costp }}
         </div>
+        <br>
         <div class="">
-          {{ product.stock }}
+          <a class="btn btn-success" href="{% url 'aseo' %}">Seguir comprando</a>
+          <a class="btn btn-info" href="{% url 'carts:cart' %}">Ir a mi carrito</a>
         </div>
       </div>
     </div>

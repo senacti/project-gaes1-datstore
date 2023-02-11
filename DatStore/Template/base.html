@@ -1,4 +1,5 @@
 {% load static %}
+{% load auth_extras %}
 {% url 'shipping_addresses:shipping_addresses' as shipping_addresses%}
 {% url 'orders:completeds' as completeds %}
 <!doctype html>
@@ -102,6 +103,8 @@
             align-items: center;
         }
     </style>
+    {% block css %}
+    {% endblock %}
 </head>
 
 <body>
@@ -132,40 +135,30 @@
                     <!--MENU PARTE3-->
                     <li class="menu-title">Herramientas</li><!-- /.menu-title -->
                     <li class="menu-item-has-children">
-                        <a href="{% url 'usuario' %}"><i class="menu-icon fa-solid fa-user-tie"></i> Usuario</a>
-                        <a href="{% url 'Rol' %}"> <i class="menu-icon fa-solid fa-user-gear"></i>Rol</a>
-                        <a href="{% url 'Ventas' %}" aria-haspopup="true" aria-expanded="false">
-                            <i class="menu-icon fa-solid fa-file-arrow-up"></i>Ventas</a>
-                        <a href="{% url 'compra' %}" aria-haspopup="true" aria-expanded="false"> <i
-                                class="menu-icon fa-solid fa-file-arrow-down"></i>Compras</a>
-                        <a href="#" aria-haspopup="true" aria-expanded="false"> <i
-                                class="menu-icon fa-solid fa-boxes-stacked"></i>Inventario</a>
-                        <a href="#" aria-haspopup="true" aria-expanded="false">
-                            <i class="menu-icon fa-solid fa-file-invoice-dollar"></i>Pedido</a>
-                        <a href="{% url 'detallepedido' %}" aria-haspopup="true" aria-expanded="false"> <i
-                                class="menu-icon fa-solid fa-file-invoice"></i>Detalle Pedido</a>
-                        <a href="{% url 'domicilio' %}" aria-haspopup="true" aria-expanded="false"> <i
-                                class="menu-icon fa-solid fa-motorcycle"></i>Domicilio</a>
-                        <a href="{% url 'formapago' %}" aria-haspopup="true" aria-expanded="false"> <i
-                                class="menu-icon fa-brands fa-cc-mastercard"></i>Forma De Pago</a>
-                        <a href="{% url 'producto' %}" aria-haspopup="true" aria-expanded="false"> <i
+                        <a href="{% url 'core:domicilio' %}" aria-haspopup="true" aria-expanded="false"> <i
+                                class="menu-icon fa-solid fa-motorcycle"></i>Domicilios</a>
+                        <a href="" aria-haspopup="true" aria-expanded="false"> <i
                                 class="menu-icon fa-solid fa-bottle-water"></i>Producto</a>
-                        <a href="{% url 'tipoprod' %}" aria-haspopup="true" aria-expanded="false"> <i
-                                class="menu-icon fa-solid fa-prescription-bottle"></i>Tipo Producto</a>
-                        <a href="{% url 'proveedor' %}" aria-haspopup="true" aria-expanded="false"> <i
-                                class="menu-icon fa-solid fa-truck-field-un"></i>Proveedor</a>
-                        <a href="{% url 'estado' %}" aria-haspopup="true" aria-expanded="false">
-                            <i class="menu-icon fa-solid fa-thumbs-up"></i>Estado</a>
                         <a href="{% url 'reportes' %}" aria-haspopup="true" aria-expanded="false">
                             <i class="menu-icon fa-solid fa-chart-column"></i>Reportes</a>
                     </li>
 
                     <li class="menu-title">Extras</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="{% url 'login' %}" aria-haspopup="true" aria-expanded="false"> <i
-                                class="menu-icon fa-solid fa-right-to-bracket"></i>Inicio Sesión</a>
-                        <a href="{% url 'login' %}" aria-haspopup="true" aria-expanded="false"> <i
-                                class="menu-icon fa-solid fa-user-check"></i>Registrarse</a>
+                        {% if request.user|has_group:"Empleado" %} 
+                        <a href="{% url 'core:Orders' %}" aria-haspopup="true" aria-expanded="false"> <i
+                            class="menu-icon fa-solid fa-shop"></i>Gestión Ordenes</a>
+                        <a href="{% url 'core:Ent_Inventario' %}" aria-haspopup="true" aria-expanded="false"> <i
+                            class="menu-icon fa-solid fa-boxes-stacked"></i>Gestión Entrada Inv.</a>
+                        {% else %}
+                            <p></p>
+                        {% endif %}
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'login' %}" aria-haspopup="true" aria-expanded="false"> <i
+                                    class="menu-icon fa-solid fa-right-to-bracket"></i>Inicio Sesión</a>
+                            <a href="{% url 'login' %}" aria-haspopup="true" aria-expanded="false"> <i
+                                    class="menu-icon fa-solid fa-user-check"></i>Registrarse</a>
+                        {% endif %}
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -211,11 +204,11 @@
                                 alt="User Avatar">
                         </a>
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="icon-menu fa-solid fa-user-lock"></i>Mi Perfil</a>
+                            <a class="nav-link" href="{% url 'users:profile' user.username %}"><i class="icon-menu fa-solid fa-user-lock"></i>Mi Perfil</a>
                             <a href="{% url 'contacto' %}" class="nav-link"><i
                                     class="icon-menu fa-solid fa-solid fa-phone"></i> Contáctenos</a>
                             {% if user.is_authenticated %}
-                            <a href="{% url 'carts:cart'%}" class="nav-link"><i
+                            <a href="{% url 'carts:cart' %}" class="nav-link"><i
                                     class="icon-menu fa-solid fa-cart-shopping"></i> Mi Carrito</a>
 
                             <a href="{{ shipping_addresses }}" class="nav-link"><i
@@ -275,6 +268,8 @@
     <script src="{% static 'js/main.js' %}"></script>
 
     <script>
+
+        
         function cerrarSesion(id) {
             Swal.fire({
                 title: '¿Estás seguro?',
@@ -510,4 +505,7 @@
     --->
 </body>
 
+
+{% block javascript %}
+{% endblock %}
 </html>

@@ -4,6 +4,7 @@ from django.contrib import messages
 from DatStore.settings import EMAIL_HOST_USER
 from django.contrib.auth.models import User
 
+
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -16,8 +17,13 @@ from django.shortcuts import redirect
 
 from .mails import Mail
 
+from django.contrib.auth.models import Group
 
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm,UserUpdateForm
+
+from django.db import models
+from django.core.signals import request_finished
+from django.dispatch import receiver
 
 def activate(request, uidb64, token):
     User= get_user_model()
@@ -65,6 +71,9 @@ def register(request):
             user=form.save(commit=False)
             user.is_active=False
             user.save()
+            group = Group.objects.get(name='Clientes')
+            user.groups.add(group)
+            user.save()
             activateEmail(request, user, form.cleaned_data.get('email'))
             return redirect('index')
         else:
@@ -80,3 +89,33 @@ def register(request):
         context={'form': form}
     )
 
+@receiver(models.signals.post_save, sender=User)
+def post_save_user_signal_handler(sender, instance, created, **kwargs):
+    if created:
+       group = Group.objects.get(name='Clientes')
+       instance.groups.add(group)
+       instance.save()
+
+def profile(request, username):
+    if request.method == "POST":
+        user= request.user
+        forms = form = UserUpdateForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            user_form = form.save()
+            messages.success(request, f'{user_form.username}, se ha actualizado tu perfil')
+            return redirect('users:profile', user_form.username)
+        
+        for error in list(form.errors.values()):
+
+                messages.error(request, error)
+
+        
+    user=get_user_model().objects.filter(username=username).first()
+    if user:
+        form = UserUpdateForm(instance=user)
+        return render(
+            request=request,
+            template_name= 'users/profile.html', 
+            context={'form': form}
+            )
+    return redirect('')

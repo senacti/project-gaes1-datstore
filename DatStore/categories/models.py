@@ -5,9 +5,9 @@ from core.models import Product
 # Create your models here.
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField()
-    products = models.ManyToManyField(Product, blank=True)
+    name = models.CharField(max_length=50, verbose_name="Nombre")
+    description = models.TextField(verbose_name="Descripción")
+    products = models.ManyToManyField(Product, blank=True, verbose_name="Productos")
 
     def __str__(self):
         return self.name
